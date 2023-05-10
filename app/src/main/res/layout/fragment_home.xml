@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/backcolor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/addnewpatient"
+            android:id="@+id/imagesss"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:paddingTop="15dp"
+            android:text="Add new Patient"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#009688"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textColorHint="#191514">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edittext_CNIC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="CNIC/Father CNIC" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="@color/teal_700"
+                android:hint="Update"
+                android:shadowColor="#ede9e9"
+                android:textAllCaps="true"
+                android:textColor="#FF5722"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:textColorHint="#191514">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_fulname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Full Name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Spinner
+            android:id="@+id/spinner_relation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:textColorHint="#191514">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_patientname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Patient's Name" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:textColorHint="#191514">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edittext_DOB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="D.O.B" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textColor="@color/teal_700"
+            android:textStyle="bold"
+            android:textSize="18dp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/Radia_button_Male"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/Radia_button_FeMale"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Female" />
+        </RadioGroup>
+
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:backgroundTint="@color/teal_700"
+            android:hint="Next"
+            android:textAllCaps="true"
+            android:textColor="#FF5722"
+            android:textStyle="bold|italic" />
+
+
+    </LinearLayout>
+</FrameLayout>

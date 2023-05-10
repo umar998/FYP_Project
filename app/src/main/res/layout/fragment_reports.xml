@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backcolor"
+    tools:context=".ReportsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/text_view_spinner_Provinces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Patient's Report"
+            android:textAlignment="center"
+            android:textColor="#E91E63"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/full_name_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
+        <ListView
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/List_vew_patient_report"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

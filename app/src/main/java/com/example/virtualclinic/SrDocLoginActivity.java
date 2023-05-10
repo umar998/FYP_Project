@@ -3,6 +3,7 @@ package com.example.virtualclinic;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -49,6 +50,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
     private Context mContext;
     private Patients_Detail_Adapter adapter;
     private ArrayList<AppointmentDataNew> appointmentsList;
+    int SrDoc_id = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         mContext = this;
         Intent i = getIntent();
-        int SrDoc_id = i.getIntExtra("Srdoc_id", 0);
+        SrDoc_id = i.getIntExtra("Srdoc_id", 0);
         String SrDoc_full_name = i.getStringExtra("full_name");
         int Doc_id = i.getIntExtra("Doc_id", 0);
         String Doc_full_name = i.getStringExtra("Doc_full_name");
@@ -102,79 +104,41 @@ public class SrDocLoginActivity extends AppCompatActivity {
 //        adapter.setData(getAppointments());
 
 
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getCurrentAppoints(SrDoc_id);
+            }
+        });
+    }
+
+    private void getCurrentAppoints(int SrDoc_id) {
+        GetRetrofitInstance.getApiService().MyNewAppointments(SrDoc_id).enqueue(new Callback<ArrayList<SrDocAppointments>>() {
+            @Override
+            public void onResponse(Call<ArrayList<SrDocAppointments>> call, Response<ArrayList<SrDocAppointments>> response) {
+                if (response.body().size() != 0) {
+                    adapter.setData(response.body());
+                } else {
+                    Toast.makeText(SrDocLoginActivity.this, "No Appointments Available", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<SrDocAppointments>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                GetRetrofitInstance.getApiService().MyNewAppointments(SrDoc_id).enqueue(new Callback<ArrayList<SrDocAppointments>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<SrDocAppointments>> call, Response<ArrayList<SrDocAppointments>> response) {
-                        adapter.setData(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<SrDocAppointments>> call, Throwable t) {
-
-                    }
-                });
+                getCurrentAppoints(SrDoc_id);
             }
-        },5000);
-
-      /*  Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Api.BASE_URL)
-                        .client(client)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .addConverterFactory(ScalarsConverterFactory.create())
-
-                        .build();
-                Api api = retrofit.create(Api.class);
-
-                api.MyNewAppointments(SrDoc_id).enqueue(new Callback<ArrayList<SrDocAppointments>>() {
-                    @Override
-                    public void onResponse(Call<ArrayList<SrDocAppointments>> call, Response<ArrayList<SrDocAppointments>> response) {
-                        if (response.isSuccessful()) {
-
-                        *//*    List<SrDocAppointments> appointments=new ArrayList<>();
-                            String json = response.body().toString();
-                            //Toast.makeText(SrDocLoginActivity.this, json, Toast.LENGTH_LONG).show();
-                            JsonParser parser = new JsonParser();
-                            JsonArray jsonArray = parser.parse(json).getAsJsonArray();
-//                            JsonObject jsonObject = parser.parse(json).getAsJsonObject();
-//                            JsonObject pObject = jsonObject.getAsJsonObject("s");
-                            for(JsonElement element : jsonArray){
-                                JsonObject pObject = element.getAsJsonObject();
-                                int appointment_id = pObject.get("appointment_id").getAsInt();
-                                int patient_id = pObject.get("patient_id").getAsInt();
-                                int jrdoc_id = pObject.get("jrdoc_id").getAsInt();
-                                //float rating = pObject.get("rating").getAsFloat();
-                                String date = pObject.get("date").getAsString();
-                                String time = pObject.get("time").getAsString();
-                                int status = pObject.get("status").getAsInt();
-                                int srdoc_id = pObject.get("srdoc_id").getAsInt();
-                                int visit_id = pObject.get("visit_id").getAsInt();
-                                SrDocAppointments srDocAppointments = new SrDocAppointments(appointment_id, patient_id, jrdoc_id, date, time, status, srdoc_id, visit_id);
-                               // Toast.makeText(SrDocLoginActivity.this, "visit"+visit_id, Toast.LENGTH_LONG).show();
-                                appointments.add(srDocAppointments);
-                            }*//*
-                            adapter.setData(response.body());
-                        } else {
-                            Toast.makeText(SrDocLoginActivity.this, "no cases", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ArrayList<SrDocAppointments>> call, Throwable t) {
-                    }
-                });
-            }
-        }, 5000);*/
+        }, 5000);
     }
 
     private void getPatientDetails(SrDocAppointments appointments) {
@@ -184,7 +148,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Prescription>> call, Response<List<Prescription>> response) {
 
-                getAppointsDetails(appointments,response.body());
+                getAppointsDetails(appointments, response.body());
             }
 
             @Override
@@ -196,22 +160,20 @@ public class SrDocLoginActivity extends AppCompatActivity {
 
     }
 
-    private void getAppointsDetails(SrDocAppointments appointments,List<Prescription> list) {
+    private void getAppointsDetails(SrDocAppointments appointments, List<Prescription> list) {
         GetRetrofitInstance.getApiService().AppointmentDetails(appointments.getVisit_id()).enqueue(new Callback<ArrayList<AppointmentDataNew>>() {
             @Override
             public void onResponse(Call<ArrayList<AppointmentDataNew>> call, Response<ArrayList<AppointmentDataNew>> response) {
-                appointmentsList=response.body();
-                if(appointmentsList!=null && appointmentsList.size()>0)
-                {
+                appointmentsList = response.body();
+                if (appointmentsList != null && appointmentsList.size() > 0) {
                     AppointmentDataNew appointmentData = appointmentsList.get(0);
                     Intent intent = new Intent(SrDocLoginActivity.this, SRDocAssignCasesDetailsActivty.class);
-                    intent.putExtra("appointmentData",appointmentData);
+                    intent.putExtra("appointmentData", appointmentData);
                     intent.putParcelableArrayListExtra("listOfPres", (ArrayList<? extends Parcelable>) list);
                     //intent.putExtra("listOfPres",new JSONArray(list).toString());
                     startActivity(intent);
 
-                }
-                else {
+                } else {
                     Toast.makeText(SrDocLoginActivity.this, "No appointment data available", Toast.LENGTH_SHORT).show();
                 }
 
@@ -269,10 +231,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
-  public interface AppointmentClick{
+    public interface AppointmentClick {
         public void onAppointmentClicked(SrDocAppointments appointments);
     }
 }

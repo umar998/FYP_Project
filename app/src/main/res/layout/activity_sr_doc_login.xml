@@ -6,22 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".SrDocLoginActivity"
     android:background="@drawable/backcolor"
+    android:padding="20dp"
     android:orientation="vertical">
     <ImageView
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_logout_24"
-        android:layout_alignParentEnd="true"
-        android:layout_marginLeft="350dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_alignParentEnd="true"/>
 
     <TextView
         android:id="@+id/text_view_username"
-        android:layout_marginTop="30dp"
-        android:layout_width="250dp"
+        android:layout_below="@+id/logout_button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Umer Alam"
         android:textAlignment="center"
+        android:layout_toStartOf="@+id/logout_button"
         android:textColor="#1C0A10"
         android:textStyle="bold"
         android:textSize="25dp" />
@@ -30,20 +31,39 @@
         android:id="@+id/text_view_spinner_Provinces"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:text="Appointments"
+        android:layout_below="@+id/text_view_username"
         android:textAlignment="center"
+        android:textSize="22sp"
         android:textColor="#E91E63"
-        android:textStyle="bold"
-        android:textSize="30dp" />
+        android:textStyle="bold"/>
 
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="125dp"
+    <RelativeLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_appointments"/>
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/text_view_spinner_Provinces">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_appointments"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+
+
+
 
 
 </RelativeLayout>

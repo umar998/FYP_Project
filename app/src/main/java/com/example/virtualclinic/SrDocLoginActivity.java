@@ -108,6 +108,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 getCurrentAppoints(SrDoc_id);
+                binding.swipeContainer.setRefreshing(false);
             }
         });
     }
@@ -119,6 +120,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
                 if (response.body().size() != 0) {
                     adapter.setData(response.body());
                 } else {
+                    adapter.setData(new ArrayList<>());
                     Toast.makeText(SrDocLoginActivity.this, "No Appointments Available", Toast.LENGTH_SHORT).show();
                 }
             }

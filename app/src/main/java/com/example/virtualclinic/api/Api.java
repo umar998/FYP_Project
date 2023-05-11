@@ -99,6 +99,10 @@ public interface Api {
     public Call<String> Addpatient(
             @Body Patient p
     );
+    @GET("Patient/GetAllPrescriptions")
+    Call<List<Prescription>> GetAllPrescriptions(
+            @Query("cnic") String cnic
+    );
     @GET("Jrdoc/MyNewCases")
     public Call<String> MyNewCases(
             @Query("id") int id
@@ -107,9 +111,13 @@ public interface Api {
     public Call<ArrayList<SrDocAppointments>> MyNewAppointments(
             @Query("id") int id
     );
+    @GET("Srdoc/AssignAppointmentsToSrDoctor")
+     Call<Void> AssignAppointmentsToSrDoctor();
+
 
     @GET("Jobs/AssignPatientToDoctor")
-    public Call<String> AssignPatientToDoctor();
+    Call<Void> AssignPatientToDoctor();
+
     @POST("Jrdoc/Updatingvitalstatus")
     public Call<String> Updatingvitalstatus(
             @Query("vitalid") int vitalid

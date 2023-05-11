@@ -7,6 +7,15 @@
     tools:context=".SearchingPatientCNICActivity"
     android:orientation="vertical"
     android:background="@drawable/backcolor">
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:textStyle="italic"
+        android:hint="Back"
+        android:layout_marginLeft="280dp"
+        android:textColor="@color/purple_700" />
     <ImageView
         android:layout_marginLeft="140dp"
         android:layout_width="130dp"
@@ -32,16 +41,22 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/back"
+            android:id="@+id/search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:backgroundTint="@color/teal_700"
-            android:hint="Go Back"
+            android:hint="Search"
             android:shadowColor="#ede9e9"
             android:textAllCaps="true"
             android:textColor="#FF5722"
             android:textStyle="bold|italic" />
+
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:id="@+id/textview_prescription"/>
+
 
 </LinearLayout>

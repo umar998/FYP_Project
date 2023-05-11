@@ -2,6 +2,7 @@ package com.example.virtualclinic;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,6 +56,24 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
 
             addedCases.clear();
         }
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                // Make API call here
+                if(!isRequestMade)
+                {
+                    makeApiCall();
+                }
+            }
+        }, 10000);
 
     }
     @Override
@@ -115,27 +134,33 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
             }
         });
 
-        //binding.textViewUsername.setText(StaticClass.docName);
-        Gson gson = new Gson();
-        handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void run()
-            {
-                // Make API call here
-                if(!isRequestMade)
-                {
-                    makeApiCall();
-                }
+            public void onRefresh() {
+                makeApiCall();
+                binding.swipeContainer.setRefreshing(false);
             }
-        }, 15000);
+        });
+
+
     }
     private void makeApiCall() {
+
         Retrofit retrofit= new Retrofit.Builder().baseUrl(Api.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
         Api api=retrofit.create(Api.class);
+        api.AssignPatientToDoctor().enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                //Toast.makeText(JrDocLoginTestActivity.this,"Api Called",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
         if(visit_id>lastVisitId && !addedCases.contains(visit_id))
         {
             api.MyNewCases(Docid).enqueue(new Callback<String>()
@@ -199,7 +224,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<String> call, Response<String> response) {
                                             if (response.isSuccessful()) {
-                                                Toast.makeText(JrDocLoginTestActivity.this, "Accepted Case", Toast.LENGTH_LONG).show();
+                                                //Toast.makeText(JrDocLoginTestActivity.this, "Accepted Case", Toast.LENGTH_LONG).show();
                                             } else
                                                 Toast.makeText(JrDocLoginTestActivity.this, "Accepted Case Failed", Toast.LENGTH_LONG).show();
                                         }
@@ -213,7 +238,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(Call<String> call, Response<String> response) {
                                             if (response.isSuccessful()) {
-                                                Toast.makeText(JrDocLoginTestActivity.this, "Appointment", Toast.LENGTH_LONG).show();
+                                                //Toast.makeText(JrDocLoginTestActivity.this, "Appointment", Toast.LENGTH_LONG).show();
                                             } else
                                                 Toast.makeText(JrDocLoginTestActivity.this, "Failed", Toast.LENGTH_LONG).show();
                                         }
@@ -272,73 +297,17 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                     }
                     // Reset the flag and schedule the next API call
                     isRequestMade = false;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            makeApiCall();
-                        }
-                    }, 35000);
                 }
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Toast.makeText(JrDocLoginTestActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-//                isRequestMade = false;
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        makeApiCall();
-//                    }
-//                }, 35000);
-
                 }
             });
         }
-
         // Set the flag to true indicating that the request has been made
         isRequestMade = true;
     }
-//    private  Handler mHandler = new Handler();
-//    private Runnable mRunnableTask = new Runnable()
-//    {
-//        @Override
-//        public void run() {
-//            // add your api here
-//            RetrofitClient client =
-//                    RetrofitClient.getInstance();
-//            Api api = client.getMyApi();
-//            api.AssignPatientToDoctor().enqueue(new Callback<String>() {
-//                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
-//                    if(response.isSuccessful()){
-//                        Toast.makeText(JrDocLoginTestActivity.this,"Working",Toast.LENGTH_LONG).show();
-//                    }
-////                    else
-////                        Toast.makeText(JrDocLoginTestActivity.this,"Not Working",Toast.LENGTH_LONG).show();
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
-//                    //Toast.makeText(JrDocLoginTestActivity.this,"Not Working",Toast.LENGTH_LONG).show();
-//                }
-//            });
-            // this will repeat this task again at specified time interval
-//            Log.d("handler","working");
-//            mHandler.postDelayed(this, 20000);
 
-//        }
-//    };
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        mHandler.postDelayed(mRunnableTask, 20000); // start the first function call after 10 seconds
-//    }
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        mHandler.removeCallbacks(mRunnableTask); // stop the function call when the activity is paused
-//    }
 
 
 }

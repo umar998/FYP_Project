@@ -50,7 +50,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
     private Context mContext;
     private Patients_Detail_Adapter adapter;
     private ArrayList<AppointmentDataNew> appointmentsList;
-    int SrDoc_id = -1;
+    int SrDoc_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,8 @@ public class SrDocLoginActivity extends AppCompatActivity {
         int Doc_id = i.getIntExtra("Doc_id", 0);
         String Doc_full_name = i.getStringExtra("Doc_full_name");
         binding.textViewUsername.setText(Doc_full_name);
+
+        Toast.makeText(SrDocLoginActivity.this, "Sr_DOc id"+SrDoc_id, Toast.LENGTH_SHORT).show();
 
         binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,21 @@ public class SrDocLoginActivity extends AppCompatActivity {
     }
 
     private void getCurrentAppoints(int SrDoc_id) {
+
+        GetRetrofitInstance.getApiService().AssignAppointmentsToSrDoctor().enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful())
+                {
+                    Toast.makeText(SrDocLoginActivity.this, "Assign API Called", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
         GetRetrofitInstance.getApiService().MyNewAppointments(SrDoc_id).enqueue(new Callback<ArrayList<SrDocAppointments>>() {
             @Override
             public void onResponse(Call<ArrayList<SrDocAppointments>> call, Response<ArrayList<SrDocAppointments>> response) {
@@ -178,61 +195,54 @@ public class SrDocLoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(SrDocLoginActivity.this, "No appointment data available", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
             @Override
             public void onFailure(Call<ArrayList<AppointmentDataNew>> call, Throwable t) {
-
             }
         });
     }
-
-
-    private ArrayList<SrDocAppointments> getAppointments() {
-        String data = "[\n" +
-                "   {\n" +
-                "      \"appointment_id\":1066,\n" +
-                "      \"patient_id\":2061,\n" +
-                "      \"jrdoc_id\":7,\n" +
-                "      \"rating\":null,\n" +
-                "      \"date\":\"09/05/2023\",\n" +
-                "      \"time\":\"10:10 pm\",\n" +
-                "      \"status\":0,\n" +
-                "      \"srdoc_id\":1,\n" +
-                "      \"visit_id\":1089\n" +
-                "   },\n" +
-                "   {\n" +
-                "      \"appointment_id\":1067,\n" +
-                "      \"patient_id\":2061,\n" +
-                "      \"jrdoc_id\":7,\n" +
-                "      \"rating\":null,\n" +
-                "      \"date\":\"09/05/2023\",\n" +
-                "      \"time\":\"10:47 pm\",\n" +
-                "      \"status\":0,\n" +
-                "      \"srdoc_id\":1,\n" +
-                "      \"visit_id\":1089\n" +
-                "   },\n" +
-                "   {\n" +
-                "      \"appointment_id\":1068,\n" +
-                "      \"patient_id\":2062,\n" +
-                "      \"jrdoc_id\":7,\n" +
-                "      \"rating\":null,\n" +
-                "      \"date\":\"09/05/2023\",\n" +
-                "      \"time\":\"10:49 pm\",\n" +
-                "      \"status\":0,\n" +
-                "      \"srdoc_id\":1,\n" +
-                "      \"visit_id\":1090\n" +
-                "   }\n" +
-                "]";
-        Gson gson = new Gson();
-
-        return gson.fromJson(data, new TypeToken<ArrayList<SrDocAppointments>>() {
-        }.getType());
-
-    }
-
-
+//    private ArrayList<SrDocAppointments> getAppointments() {
+//        String data = "[\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1066,\n" +
+//                "      \"patient_id\":2061,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:10 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1089\n" +
+//                "   },\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1067,\n" +
+//                "      \"patient_id\":2061,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:47 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1089\n" +
+//                "   },\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1068,\n" +
+//                "      \"patient_id\":2062,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:49 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1090\n" +
+//                "   }\n" +
+//                "]";
+//        Gson gson = new Gson();
+//
+//        return gson.fromJson(data, new TypeToken<ArrayList<SrDocAppointments>>() {
+//        }.getType());
+//
+//    }
     public interface AppointmentClick {
         public void onAppointmentClicked(SrDocAppointments appointments);
     }

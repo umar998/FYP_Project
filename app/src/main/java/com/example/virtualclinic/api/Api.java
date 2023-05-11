@@ -12,6 +12,7 @@ import com.example.virtualclinic.Models.Nurse;
 import com.example.virtualclinic.Models.NurseSignup;
 import com.example.virtualclinic.Models.Patient;
 import com.example.virtualclinic.Models.PatientObject;
+import com.example.virtualclinic.Models.PatientPrescriptionDetail;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.Models.SeniorDoctorLogin;
 import com.example.virtualclinic.Models.SrDocAppointments;
@@ -100,7 +101,7 @@ public interface Api {
             @Body Patient p
     );
     @GET("Patient/GetAllPrescriptions")
-    Call<List<Prescription>> GetAllPrescriptions(
+    Call<List<PatientPrescriptionDetail>> GetAllPrescriptions(
             @Query("cnic") String cnic
     );
     @GET("Jrdoc/MyNewCases")

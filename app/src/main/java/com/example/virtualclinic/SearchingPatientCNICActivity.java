@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.virtualclinic.Models.PatientPrescriptionDetail;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.databinding.ActivitySearchingPatientCnicactivityBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
@@ -39,24 +40,25 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cnic= binding.edittextCNIC.getText().toString();
-                GetRetrofitInstance.getApiService().GetAllPrescriptions(cnic).enqueue(new Callback<List<Prescription>>() {
+                GetRetrofitInstance.getApiService().GetAllPrescriptions(cnic).enqueue(new Callback<List<PatientPrescriptionDetail>>() {
                     @Override
-                    public void onResponse(Call<List<Prescription>> call, Response<List<Prescription>> response) {
+                    public void onResponse(Call<List<PatientPrescriptionDetail>> call, Response<List<PatientPrescriptionDetail>> response) {
                         if (response.isSuccessful())
                         {
-                            list=response.body();
-                            Toast.makeText(SearchingPatientCNICActivity.this, "List"+list, Toast.LENGTH_LONG).show();
                             String prescriptionText = "";
-                            if (list != null)
+                            List<PatientPrescriptionDetail> prescriptionDetails = response.body();
+                            Toast.makeText(SearchingPatientCNICActivity.this, "List"+response.code(), Toast.LENGTH_LONG).show();
+                            if (prescriptionDetails != null)
                             {
-                                for (Prescription prescription : list)
+                                for (PatientPrescriptionDetail prescriptionDetail : prescriptionDetails)
                                 {
-                                   // Toast.makeText(SearchingPatientCNICActivity.this, "Medicine"+prescription.getMedicine(), Toast.LENGTH_LONG).show();
+                                    Prescription prescription = prescriptionDetail.getPrescription();
                                     prescriptionText += "Medicine: " + prescription.getMedicine() + "  " +
                                             "Duration: " + prescription.getDuration() + "  " +
                                             "Timing: " + prescription.getTiming() + "\n";
                                 }
                                 binding.textviewPrescription.setText(prescriptionText);
+
                             }
                             else {
                                 Toast.makeText(SearchingPatientCNICActivity.this, "No history", Toast.LENGTH_LONG).show();
@@ -64,11 +66,14 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
                             }
 
                         }
+                        else {
+                            Toast.makeText(SearchingPatientCNICActivity.this, "No history", Toast.LENGTH_LONG).show();
+                            binding.textviewPrescription.setText("");
+                        }
                     }
-
                     @Override
-                    public void onFailure(Call<List<Prescription>> call, Throwable t) {
-
+                    public void onFailure(Call<List<PatientPrescriptionDetail>> call, Throwable t) {
+                        binding.textviewPrescription.setText("");
                     }
                 });
             }

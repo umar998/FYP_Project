@@ -195,6 +195,8 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                             String sugar = vObject.get("sugar").getAsString();
                             String temp = vObject.get("temperature").getAsString();
                             String symptoms = vObject.get("symptoms").getAsString();
+                            String image = vObject.get("image").getAsString();
+                            //Toast.makeText(JrDocLoginTestActivity.this,"image:"+image,Toast.LENGTH_LONG).show();
                             //String imagedatastring = vObject.get("image").getAsString();
                             //Toast.makeText(JrDocLoginTestActivity.this,imagedatastring,Toast.LENGTH_LONG).show();
                             // Decode image data from Base64 string
@@ -268,7 +270,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                     i.putExtra("sugar", sugar);
                                     i.putExtra("temperature", temp);
                                     i.putExtra("symptoms", symptoms);
-                                    // i.putExtra("imageData", imagedatastring);
+                                     i.putExtra("imageData", image);
 
                                     i.putExtra("visit_id", visit_id);
                                     i.putExtra("jrdoc_id", jrdoc_id);

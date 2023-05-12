@@ -20,7 +20,6 @@ import retrofit2.Response;
 
 public class SearchingPatientCNICActivity extends AppCompatActivity {
     ActivitySearchingPatientCnicactivityBinding binding;
-    List<Prescription> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,6 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
                         {
                             String prescriptionText = "";
                             List<PatientPrescriptionDetail> prescriptionDetails = response.body();
-                            Toast.makeText(SearchingPatientCNICActivity.this, "List"+response.code(), Toast.LENGTH_LONG).show();
                             if (prescriptionDetails != null)
                             {
                                 for (PatientPrescriptionDetail prescriptionDetail : prescriptionDetails)
@@ -64,7 +62,6 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
                                 Toast.makeText(SearchingPatientCNICActivity.this, "No history", Toast.LENGTH_LONG).show();
                                 binding.textviewPrescription.setText("");
                             }
-
                         }
                         else {
                             Toast.makeText(SearchingPatientCNICActivity.this, "No history", Toast.LENGTH_LONG).show();

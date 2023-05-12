@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.Models.StaticClass;
 import com.example.virtualclinic.api.Api;
@@ -21,7 +23,9 @@ import com.example.virtualclinic.databinding.ActivityPatientsDetailedBinding;
 import com.example.virtualclinic.databinding.DurationPopupBinding;
 import com.example.virtualclinic.databinding.MedicnePopupBinding;
 import com.example.virtualclinic.databinding.TimingPopupBinding;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -490,9 +494,10 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         String sugar=i.getStringExtra("sugar");
         String temperature=i.getStringExtra("temperature");
         String symptoms=i.getStringExtra("symptoms");
-        //byte[] imageData = i.getByteArrayExtra("imageData");
-        Bitmap imageData=getIntent().getParcelableExtra("imageData");
-        //Bitmap bitmap=BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        String imagePath = getIntent().getStringExtra("imageData");
+        Toast.makeText(PatientsDetailedActivity.this,
+                "image : "+imagePath,
+                Toast.LENGTH_SHORT).show();
 
         int visit_id=i.getIntExtra("visit_id",0);
         int jrdoc_id=i.getIntExtra("jrdoc_id",0);
@@ -515,7 +520,14 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         binding.textviewSugar.setText(sugar);
         binding.textviewTemp.setText(temperature);
         binding.textviewSymptoms.setText(symptoms);
-        binding.imagesss.setImageBitmap(imageData);
+
+        Picasso.get().load(Uri.parse(Api.BASE_URL2+"Content/Uploads/"+imagePath)).into(binding.imagesss);
+       binding.imagesss.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               // Toggle zoom level
+           }
+       });
 
         RetrofitClient client =
                 RetrofitClient.getInstance();

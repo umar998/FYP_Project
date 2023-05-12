@@ -201,41 +201,6 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                     RequestBody sugarr = RequestBody.create(MediaType.parse("text/plain"), sugar);
                     RequestBody temperature = RequestBody.create(MediaType.parse("text/plain"), temp);
                     RequestBody symp = RequestBody.create(MediaType.parse("text/plain"), res);
-                    //File file= new File(imageuri.toString());
-//                RequestBody photoContent = null;
-//                MultipartBody.Part photo = null;
-//                if (imageuri != null && !TextUtils.isEmpty(imageuri.toString())) {
-//                    File file = null;
-//                    try {
-//                        file = FileUtil.from(NextPageofNurseAddNewPatientActivity.this,imageuri);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    if(file==null){
-//                        Toast.makeText(NextPageofNurseAddNewPatientActivity.this,"NULL",Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                    photoContent = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//                    photo = MultipartBody.Part.createFormData("photo", file.getName(), photoContent);
-//                } else {
-//                    photoContent = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-//                    photo = MultipartBody.Part.createFormData("photo", "", photoContent);
-//                }
-
-//                RequestBody photoContent= RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//                MultipartBody.Part photo = MultipartBody.Part.createFormData("photo", file.getName(),photoContent);
-
-//                String PatientCNIC=i.getStringExtra("cnic");
-//                String PatientFullName=i.getStringExtra("Fullname");
-//                String PatientRelation=i.getStringExtra("relation_name");
-//                String PatientRelationName=i.getStringExtra("patient_name");
-//                String PatientDOB=i.getStringExtra("DOB");
-//                String PatientGender=i.getStringExtra("gender");
-
-//                RetrofitClient client =
-//                        RetrofitClient.getInstance();
-                    //Api uploadService = RetrofitClient.getInstance().getMyApi();
-                    //MultipartBody.Part finalPhoto = photo;
                     api.Addvitals(photo, PIdd, bbp, sugarr, temperature, symp).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response)
@@ -245,21 +210,6 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                                         "Patient Added",
                                         Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(NextPageofNurseAddNewPatientActivity.this, MainBottomTabsActivity.class);
-//                                Intent ii= new Intent(NextPageofNurseAddNewPatientActivity.this,JrDocLoginActivity.class);
-//
-//                                ii.putExtra("Patients_id",Patients_id);
-//                                ii.putExtra("PatientCNIC",PatientCNIC);
-//                                ii.putExtra("PatientFullName",PatientFullName);
-//                                ii.putExtra("PatientRelation",PatientRelation);
-//                                ii.putExtra("PatientRelationName",PatientRelationName);
-//                                ii.putExtra("PatientDOB",PatientDOB);
-//                                ii.putExtra("PatientGender",PatientGender);
-//                                ii.putExtra("bp",bp);
-//                                ii.putExtra("sugar",sugar);
-//                                ii.putExtra("temp",temp);
-//                                ii.putExtra("Symptoms",res);
-//                                ii.putExtra("photo", String.valueOf(finalPhoto));
-
                                 startActivity(i);
                             } else {
                                 Toast.makeText(NextPageofNurseAddNewPatientActivity.this, "Failed" + response.code(), Toast.LENGTH_LONG).show();

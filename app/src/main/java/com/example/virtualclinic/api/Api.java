@@ -38,6 +38,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
+    public  static String BASE_URL2="http://192.168.180.198/fyp/";
     public  static String BASE_URL="http://192.168.180.198/fyp/api/";
 
     @POST("Jrdoc/Jrsignup")

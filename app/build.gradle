@@ -47,7 +47,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.github.chrisbanes:PhotoView:latest_version'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.databinding:databinding-compiler-common:7.1.2'

@@ -521,13 +521,14 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         binding.textviewTemp.setText(temperature);
         binding.textviewSymptoms.setText(symptoms);
 
-        Picasso.get().load(Uri.parse(Api.BASE_URL2+"Content/Uploads/"+imagePath)).into(binding.imagesss);
+        //Picasso.get().load(Uri.parse(Api.BASE_URL2+imagePath)).into(binding.imagesss);
        binding.imagesss.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                // Toggle zoom level
            }
        });
+       Glide.with(binding.imagesss).load(Api.BASE_URL2+imagePath).into(binding.imagesss);
 
         RetrofitClient client =
                 RetrofitClient.getInstance();

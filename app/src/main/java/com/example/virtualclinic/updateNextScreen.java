@@ -1,7 +1,5 @@
 package com.example.virtualclinic;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +8,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.virtualclinic.Models.Patient;
-import com.example.virtualclinic.api.Api;
-import com.example.virtualclinic.api.RetrofitClient;
 import com.example.virtualclinic.databinding.ActivityUpdateNextScreenBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +38,6 @@ public class updateNextScreen extends AppCompatActivity {
         //String relation_name = i.getStringExtra("relation_name");
         String patientname = i.getStringExtra("patientname");
         String dob = i.getStringExtra("dob");
-        String gender = i.getStringExtra("gender");
         //try {
 
         ArrayList<String> DataList = new ArrayList<>();
@@ -54,12 +53,8 @@ public class updateNextScreen extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = parent.getItemAtPosition(position).toString();
-                if (selectedItem.equals("Self")) {
+                if ("Self".equals(selectedItem)) {
                     binding.edittextPatientname.setVisibility(View.GONE);
-                } else if (selectedItem.equals("Spouse")) {
-                    binding.edittextPatientname.setVisibility(View.VISIBLE);
-                } else if (selectedItem.equals("Child 1")) {
-                    binding.edittextPatientname.setVisibility(View.VISIBLE);
                 } else {
                     binding.edittextPatientname.setVisibility(View.VISIBLE);
                 }
@@ -76,40 +71,37 @@ public class updateNextScreen extends AppCompatActivity {
         binding.edittextPatientname.setText(patientname);
         binding.edittextDOB.setText(dob);
 
-        binding.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Patient p = new Patient();
-                p.setCNIC(binding.edittextCNIC.getText().toString());
-                p.setDOB(binding.edittextDOB.getText().toString());
-                p.setFull_name(binding.edittextFullname.getText().toString());
-                p.setGender(binding.genderRB.getCheckedRadioButtonId() == R.id.Radia_button_Male ? "Male" : "Female");
-                p.setRelative_name(getRelation());
-                p.setRelation(binding.spinnerRelation.getSelectedItem().toString());
+        binding.save.setOnClickListener(view -> {
+            Patient p = new Patient();
+            p.setCNIC(Objects.requireNonNull(binding.edittextCNIC.getText()).toString());
+            p.setDOB(Objects.requireNonNull(binding.edittextDOB.getText()).toString());
+            p.setFull_name(Objects.requireNonNull(binding.edittextFullname.getText()).toString());
+            p.setGender(binding.genderRB.getCheckedRadioButtonId() == R.id.Radia_button_Male ? "Male" : "Female");
+            p.setRelative_name(getRelation());
+            p.setRelation(binding.spinnerRelation.getSelectedItem().toString());
 
 
-                GetRetrofitInstance.getApiService().Updatepatdetails(p, patient_id
-                        , binding.edittextCNIC.getText().toString()).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(updateNextScreen.this,
-                                    "Updated",
-                                    Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(updateNextScreen.this,
-                                    "Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
+            GetRetrofitInstance.getApiService().Updatepatdetails(p, patient_id
+                    , binding.edittextCNIC.getText().toString()).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(updateNextScreen.this,
+                                "Updated",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(updateNextScreen.this,
+                                "Failed",
+                                Toast.LENGTH_SHORT).show();
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Log.e("err", t.getMessage());
-                    }
-                });
-            }
+                @Override
+                public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    Log.e("err", t.getMessage());
+                }
+            });
         });
 
     }
@@ -120,7 +112,7 @@ public class updateNextScreen extends AppCompatActivity {
         else if (binding.spinnerRelation.getSelectedItem() == "Spouse" ||
                 binding.spinnerRelation.getSelectedItem() == "Child 1" ||
                 binding.spinnerRelation.getSelectedItem() == "SpouChild 2") {
-            return binding.edittextPatientname.getText().toString();
+            return Objects.requireNonNull(binding.edittextPatientname.getText()).toString();
         }
         return "";
     }

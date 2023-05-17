@@ -362,7 +362,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
 
                 if(timingPopupBinding.CheckBoxAllOfThem.isChecked())
                 {
-                    Timing="Morning, Afternoon and Evening";
+                    Timing="Morning-Afternoon and Evening";
                 }
                 if(timingPopupBinding.CheckBoxEvening.isChecked())
                 {

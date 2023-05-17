@@ -59,24 +59,6 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
 
     }
     @Override
-    protected void onResume() {
-        super.onResume();
-        handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                // Make API call here
-                if(!isRequestMade)
-                {
-                    makeApiCall();
-                }
-            }
-        }, 10000);
-
-    }
-    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
 
@@ -161,8 +143,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
 
             }
         });
-        if(visit_id>lastVisitId && !addedCases.contains(visit_id))
-        {
+
             api.MyNewCases(Docid).enqueue(new Callback<String>()
             {
                 @Override
@@ -278,7 +259,8 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                     i.putExtra("date", visitdate);
                                     i.putExtra("time", visittime);
                                     i.putExtra("AssignedDatetime", AssignedDatetime);
-
+                                    binding.patientName.setText("");
+                                    binding.patientAge.setText("");
                                     startActivity(i);
                                 }
                             });
@@ -307,7 +289,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                     Toast.makeText(JrDocLoginTestActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
-        }
+
         // Set the flag to true indicating that the request has been made
         isRequestMade = true;
     }

@@ -1,14 +1,14 @@
 package com.example.virtualclinic.Models;
 
 public class Nurse {
-    private int nurse_ID;
+    private int nurseID;
     private String full_name;
     private String email;
     private String password;
     private String role;
 
     public Nurse(int nurse_ID, String full_name, String email, String password, String role) {
-        this.nurse_ID = nurse_ID;
+        this.nurseID = nurse_ID;
         this.full_name = full_name;
         this.email = email;
         this.password = password;
@@ -16,11 +16,11 @@ public class Nurse {
     }
 
     public int getNurse_ID() {
-        return nurse_ID;
+        return nurseID;
     }
 
     public void setNurse_ID(int nurse_ID) {
-        this.nurse_ID = nurse_ID;
+        this.nurseID = nurse_ID;
     }
 
     public String getFull_name() {

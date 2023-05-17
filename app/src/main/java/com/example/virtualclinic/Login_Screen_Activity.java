@@ -129,9 +129,11 @@ public class Login_Screen_Activity extends AppCompatActivity
                 {
                     Nurse n=response.body();
                     String full_name=n.getFull_name();
+                    StaticClass.id=n.getNurse_ID();
                     Toast.makeText(Login_Screen_Activity.this,
                             "Welcome "+ full_name, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Login_Screen_Activity.this, MainBottomTabsActivity.class);
+                    i.putExtra("nurseID",StaticClass.id);
                     startActivity(i);
                 }else
                 {

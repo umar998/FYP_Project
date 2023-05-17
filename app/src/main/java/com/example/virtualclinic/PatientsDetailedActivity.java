@@ -1,19 +1,12 @@
 package com.example.virtualclinic;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.Models.StaticClass;
@@ -23,19 +16,15 @@ import com.example.virtualclinic.databinding.ActivityPatientsDetailedBinding;
 import com.example.virtualclinic.databinding.DurationPopupBinding;
 import com.example.virtualclinic.databinding.MedicnePopupBinding;
 import com.example.virtualclinic.databinding.TimingPopupBinding;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PatientsDetailedActivity extends AppCompatActivity {
     ActivityPatientsDetailedBinding binding;
-    private AlertDialog.Builder dialogbuilder;
     private  Dialog medicineDialog,durationDialog,timingDialog;
     private MedicnePopupBinding medicinebinding;
     private DurationPopupBinding durationPopupBinding;
@@ -53,50 +42,44 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         medicineDialog.setContentView(medicinebinding.getRoot());
         medicineDialog.show();
 
-        medicinebinding.CheckBoxBeflam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(medicinebinding.CheckBoxBeflam.isChecked())
-                {
-                    medicinebinding.CheckBoxBrufin.setEnabled(false);
-                    medicinebinding.CheckBoxDesprin.setEnabled(false);
-                    medicinebinding.CheckBoxEmoxel.setEnabled(false);
-                    medicinebinding.CheckBoxPanadol.setEnabled(false);
-                    medicinebinding.CheckBoxSoftin.setEnabled(false);
+        medicinebinding.CheckBoxBeflam.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(medicinebinding.CheckBoxBeflam.isChecked())
+            {
+                medicinebinding.CheckBoxBrufin.setEnabled(false);
+                medicinebinding.CheckBoxDesprin.setEnabled(false);
+                medicinebinding.CheckBoxEmoxel.setEnabled(false);
+                medicinebinding.CheckBoxPanadol.setEnabled(false);
+                medicinebinding.CheckBoxSoftin.setEnabled(false);
 
-                }
-                else
-                {
-                    medicinebinding.CheckBoxBeflam.setEnabled(true);
-                    medicinebinding.CheckBoxBrufin.setEnabled(true);
-                    medicinebinding.CheckBoxDesprin.setEnabled(true);
-                    medicinebinding.CheckBoxEmoxel.setEnabled(true);
-                    medicinebinding.CheckBoxPanadol.setEnabled(true);
-                    medicinebinding.CheckBoxSoftin.setEnabled(true);
-                }
+            }
+            else
+            {
+                medicinebinding.CheckBoxBeflam.setEnabled(true);
+                medicinebinding.CheckBoxBrufin.setEnabled(true);
+                medicinebinding.CheckBoxDesprin.setEnabled(true);
+                medicinebinding.CheckBoxEmoxel.setEnabled(true);
+                medicinebinding.CheckBoxPanadol.setEnabled(true);
+                medicinebinding.CheckBoxSoftin.setEnabled(true);
             }
         });
-        medicinebinding.CheckBoxSoftin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(medicinebinding.CheckBoxSoftin.isChecked())
-                {
-                    medicinebinding.CheckBoxBrufin.setEnabled(false);
-                    medicinebinding.CheckBoxDesprin.setEnabled(false);
-                    medicinebinding.CheckBoxEmoxel.setEnabled(false);
-                    medicinebinding.CheckBoxPanadol.setEnabled(false);
-                    medicinebinding.CheckBoxBeflam.setEnabled(false);
+        medicinebinding.CheckBoxSoftin.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(medicinebinding.CheckBoxSoftin.isChecked())
+            {
+                medicinebinding.CheckBoxBrufin.setEnabled(false);
+                medicinebinding.CheckBoxDesprin.setEnabled(false);
+                medicinebinding.CheckBoxEmoxel.setEnabled(false);
+                medicinebinding.CheckBoxPanadol.setEnabled(false);
+                medicinebinding.CheckBoxBeflam.setEnabled(false);
 
-                }
-                else
-                {
-                    medicinebinding.CheckBoxBeflam.setEnabled(true);
-                    medicinebinding.CheckBoxBrufin.setEnabled(true);
-                    medicinebinding.CheckBoxDesprin.setEnabled(true);
-                    medicinebinding.CheckBoxEmoxel.setEnabled(true);
-                    medicinebinding.CheckBoxPanadol.setEnabled(true);
-                    medicinebinding.CheckBoxSoftin.setEnabled(true);
-                }
+            }
+            else
+            {
+                medicinebinding.CheckBoxBeflam.setEnabled(true);
+                medicinebinding.CheckBoxBrufin.setEnabled(true);
+                medicinebinding.CheckBoxDesprin.setEnabled(true);
+                medicinebinding.CheckBoxEmoxel.setEnabled(true);
+                medicinebinding.CheckBoxPanadol.setEnabled(true);
+                medicinebinding.CheckBoxSoftin.setEnabled(true);
             }
         });
         medicinebinding.CheckBoxBrufin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -477,7 +460,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         int Docid=i.getIntExtra("Docid",0);
         String Docfull_name=i.getStringExtra("Docfull_name");
 
-        Toast.makeText(PatientsDetailedActivity.this,"Doc Name"+ Docfull_name,Toast.LENGTH_LONG).show();
+        //Toast.makeText(PatientsDetailedActivity.this,"Doc Name"+ Docfull_name,Toast.LENGTH_LONG).show();
 
         int patient_id=i.getIntExtra("patient_id",0);
         String full_name=i.getStringExtra("full_name");
@@ -495,9 +478,6 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         String temperature=i.getStringExtra("temperature");
         String symptoms=i.getStringExtra("symptoms");
         String imagePath = getIntent().getStringExtra("imageData");
-        Toast.makeText(PatientsDetailedActivity.this,
-                "image : "+imagePath,
-                Toast.LENGTH_SHORT).show();
 
         int visit_id=i.getIntExtra("visit_id",0);
         int jrdoc_id=i.getIntExtra("jrdoc_id",0);
@@ -539,9 +519,6 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     id=Integer.parseInt(response.body());
-                    Toast.makeText(PatientsDetailedActivity.this,
-                            "Appointment ID: "+id,
-                            Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -558,12 +535,17 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                 List<Prescription> prescriptions=new ArrayList<>();
                 for(int i=0;i<adapter.getCount();i++)
                 {
-                    //adapter.getItem(0).split(",")[2].split(" ");
                     String timing=adapter.getItem(i).split(",")[0].split(":")[1].trim();
                     String duration=""+adapter.getItem(i).split(",")[2].split(" ")[2]+" Days" ;
                     String med=adapter.getItem(i).split(",")[1].split(":")[1].trim();
                     int idd=id;
-                    Prescription prescription=new Prescription(idd,med,duration,timing);
+                    Calendar calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH) + 1; // Note: months are zero-based
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    String currentDateStr = day + "/" + month + "/" + year;
+
+                    Prescription prescription=new Prescription(idd,med,duration,timing,currentDateStr);
                     prescriptions.add(prescription);
                 }
                 RetrofitClient client =
@@ -584,24 +566,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                             ii.putExtra("Docid",Docid);
                             setResult(RESULT_OK,ii);
                             finish();
-                            Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
-
-//                            ReportsFragment reportsFragment= new ReportsFragment();
-//                            Bundle i = new Bundle();
-//                            //Intent i=new Intent(PatientsDetailedActivity.this,ReportsFragment.class);
-//                            i.putInt("patient_id",patient_id);
-//                            i.putString("full_name",full_name);
-//                            i.putString("relative_name",relative_name);
-//                            i.putString("patientdob",patientdob);
-//                            i.putString("bp",bp);
-//                            i.putString("sugar",sugar);
-//                            i.putString("temperature",temperature);
-//                            i.putString("symptoms",symptoms);
-//                            i.putParcelableArrayList("prescriptions", (ArrayList<? extends Parcelable>) prescriptions);
-//                            reportsFragment.setArguments(i);
-//                            getSupportFragmentManager().beginTransaction().add(android.R.id.content,reportsFragment).commit();
-//                            startActivityForResult(i,0);
-                            //startActivity(ii);
+                           // Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
                         }else
                             Toast.makeText(PatientsDetailedActivity.this,"Patients Prescription not Send"+response.code(),Toast.LENGTH_LONG).show();
                     }
@@ -616,23 +581,13 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if(response.isSuccessful())
                             Toast.makeText(PatientsDetailedActivity.this,"vitals updated",Toast.LENGTH_LONG).show();
-
                     }
-
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-
                     }
                 });
-
             }
         });
-        Toast.makeText(PatientsDetailedActivity.this,"This is : "+patient_id,Toast.LENGTH_LONG).show();
+        //Toast.makeText(PatientsDetailedActivity.this,"This is : "+patient_id,Toast.LENGTH_LONG).show();
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu){
-//        getMenuInflater().inflate(R.menu);
-//    }
-
-
 }

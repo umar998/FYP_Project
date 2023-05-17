@@ -4,18 +4,21 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Prescription implements Parcelable {
+public class Prescription extends ArrayList<Parcelable> implements Parcelable {
     private int appointment_id;
     private String medicine_name;
     private String duration;
     private String timings;
+    private String date;
 
-    public Prescription(int appointment_id, String medicine, String duration, String timings) {
+    public Prescription(int appointment_id, String medicine, String duration, String timings, String date) {
         this.appointment_id = appointment_id;
         this.medicine_name = medicine;
         this.duration = duration;
         this.timings = timings;
+        this.date=date;
     }
 
     public int getAppointment_id() {
@@ -50,11 +53,20 @@ public class Prescription implements Parcelable {
         this.timings = timings;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String Date) {
+        this.date = Date;
+    }
+
     protected Prescription(Parcel in) {
         appointment_id = in.readInt();
         timings = in.readString();
         medicine_name = in.readString();
         duration = in.readString();
+        date=in.readString();
     }
 
     public static final Parcelable.Creator<Prescription> CREATOR = new Parcelable.Creator<Prescription>() {
@@ -80,6 +92,7 @@ public class Prescription implements Parcelable {
         dest.writeString(timings);
         dest.writeString(medicine_name);
         dest.writeString(duration);
+        dest.writeString(date);
     }
 
 

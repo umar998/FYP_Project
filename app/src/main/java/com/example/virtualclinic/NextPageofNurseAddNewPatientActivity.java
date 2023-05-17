@@ -183,6 +183,7 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                 String res=Symptoms;
                 Intent i = getIntent();
                 int Patients_id = i.getIntExtra("staticclass",0);
+                int nurseID=i.getIntExtra("nurseID",0);
                 RetrofitClient client=RetrofitClient.getInstance();
                 Api api=client.getMyApi();
                 MultipartBody.Part photo;
@@ -209,8 +210,9 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                                 Toast.makeText(NextPageofNurseAddNewPatientActivity.this,
                                         "Patient Added",
                                         Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(NextPageofNurseAddNewPatientActivity.this, MainBottomTabsActivity.class);
-                                startActivity(i);
+//                                Intent i = new Intent(NextPageofNurseAddNewPatientActivity.this, MainBottomTabsActivity.class);
+//                                startActivity(i);
+                                finish();
                             } else {
                                 Toast.makeText(NextPageofNurseAddNewPatientActivity.this, "Failed" + response.code(), Toast.LENGTH_LONG).show();
                             }
@@ -220,7 +222,7 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                             Toast.makeText(NextPageofNurseAddNewPatientActivity.this, " " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                api.Visits(Patients_id).enqueue(new Callback<StaticClass>()
+                api.Visits(Patients_id,nurseID).enqueue(new Callback<StaticClass>()
                 {
                     @Override
                     public void onResponse(Call<StaticClass> call, Response<StaticClass> response)

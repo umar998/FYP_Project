@@ -67,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/patient_name"
                 android:id="@+id/patient_age"
-                android:hint="No patients available"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="18dp"

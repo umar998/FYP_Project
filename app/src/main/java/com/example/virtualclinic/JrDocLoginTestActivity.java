@@ -210,8 +210,9 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                             String visitdate = xObject.get("date").getAsString();
                             String visittime = xObject.get("time").getAsString();
                             String AssignedDatetime = xObject.get("AssignedDatetime").getAsString();
+                            int nurseID=xObject.get("nurseID").getAsInt();
                             PatientObject patientObject = new PatientObject(patient_id, name, cnic, relation, relation_name, dob, gender, patientdate, patienttime);
-
+                           // Toast.makeText(JrDocLoginTestActivity.this, "NurseID"+nurseID, Toast.LENGTH_LONG).show();
                             // vitals vitals = new vitals(vital_id, bp, sugar, temp, symptoms, imagedatastring);
 
                             addedCases.add(visit_id);
@@ -236,7 +237,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                         }
                                     });
                                     addedCases.remove(visit_id);
-                                    api.Appointment(patient_id, jrdoc_id, visit_id).enqueue(new Callback<String>() {
+                                    api.Appointment(patient_id, jrdoc_id, visit_id,nurseID).enqueue(new Callback<String>() {
                                         @Override
                                         public void onResponse(Call<String> call, Response<String> response) {
                                             if (response.isSuccessful()) {

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.virtualclinic.FileUtil;
 import com.example.virtualclinic.Models.AppointmentDataNew;
+import com.example.virtualclinic.Models.GettingReports;
 import com.example.virtualclinic.Models.JuniorDoctorLogin;
 import com.example.virtualclinic.Models.Nurse;
 import com.example.virtualclinic.Models.NurseSignup;
@@ -14,6 +15,7 @@ import com.example.virtualclinic.Models.Patient;
 import com.example.virtualclinic.Models.PatientObject;
 import com.example.virtualclinic.Models.PatientPrescriptionDetail;
 import com.example.virtualclinic.Models.Prescription;
+import com.example.virtualclinic.Models.PrescriptionAndAppointmnet;
 import com.example.virtualclinic.Models.SeniorDoctorLogin;
 import com.example.virtualclinic.Models.SrDocAppointments;
 import com.example.virtualclinic.Models.SrDocSignup;
@@ -81,6 +83,15 @@ public interface Api {
     public Call<Nurse> NurseLogin(
             @Query("email") String email,@Query("password") String password
     );
+
+    @GET("Nursel/Gettingappointments")
+    Call<ArrayList<GettingReports>> Gettingappointments(@Query("nurseid") int nurseid );
+
+    @GET("Nursel/GettingDoneaptdetails")
+    Call<List<PatientPrescriptionDetail>>  GettingDoneaptdetails(
+            @Query("aptid") int aptid
+    );
+
     @POST("Jrdoc/Jrlogin")
     public Call<JuniorDoctorLogin> JrLogin(
             @Query("email") String email,@Query("password") String password
@@ -95,7 +106,7 @@ public interface Api {
     );
     @POST("Jrdoc/Appointment")
     public Call<String> Appointment(
-            @Query("patid") int patid,@Query("jrdocid") int jrdocid,@Query("visitid") int visitid
+            @Query("patid") int patid,@Query("jrdocid") int jrdocid,@Query("visitid") int visitid,@Query("nurseID") int nurseID
     );
     @POST("Patient/Addpatient")
     public Call<String> Addpatient(
@@ -103,6 +114,10 @@ public interface Api {
     );
     @GET("Patient/GetAllPrescriptions")
     Call<List<PatientPrescriptionDetail>> GetAllPrescriptions(
+            @Query("cnic") String cnic
+    );
+    @GET("Patient/Gettingdate")
+    Call<List<SrDocAppointments>> Gettingdate(
             @Query("cnic") String cnic
     );
     @GET("Jrdoc/MyNewCases")
@@ -166,7 +181,7 @@ public interface Api {
     Call<PatientObject> Checkcnic(@Query("cnic") String cnic);
 
     @POST("Patient/Visits")
-    Call<StaticClass> Visits(@Query("patient_id") int patient_id);
+    Call<StaticClass> Visits(@Query("patient_id") int patient_id,@Query("nurseID") int nurseID);
 
 
 

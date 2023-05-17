@@ -1,11 +1,14 @@
 package com.example.virtualclinic.Models;
 
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class PatientPrescriptionDetail implements Serializable {
+public class PatientPrescriptionDetail extends ArrayList<Parcelable> implements Serializable {
 
     @SerializedName("x")
     @Expose

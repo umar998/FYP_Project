@@ -23,7 +23,6 @@ public class SrDocAppointments  implements Serializable {
 
     @SerializedName("date")
     @Expose
-   // private float rating;
     private String date;
 
     @SerializedName("time")

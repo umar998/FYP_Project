@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.virtualclinic.Models.PatientPrescriptionDetail;
 import com.example.virtualclinic.Models.Prescription;
+import com.example.virtualclinic.Models.SrDocAppointments;
 import com.example.virtualclinic.databinding.ActivitySearchingPatientCnicactivityBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
 
@@ -20,6 +21,7 @@ import retrofit2.Response;
 
 public class SearchingPatientCNICActivity extends AppCompatActivity {
     ActivitySearchingPatientCnicactivityBinding binding;
+    SrDocAppointments srDocAppointments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,23 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cnic= binding.edittextCNIC.getText().toString();
+                GetRetrofitInstance.getApiService().Gettingdate(cnic).enqueue(new Callback<List<SrDocAppointments>>() {
+                    @Override
+                    public void onResponse(Call<List<SrDocAppointments>> call, Response<List<SrDocAppointments>> response) {
+                        if(response.isSuccessful())
+                        {
+                            srDocAppointments= (SrDocAppointments) response.body();
+                            String date=srDocAppointments.getDate();
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SrDocAppointments>> call, Throwable t) {
+
+                    }
+                });
                 GetRetrofitInstance.getApiService().GetAllPrescriptions(cnic).enqueue(new Callback<List<PatientPrescriptionDetail>>() {
                     @Override
                     public void onResponse(Call<List<PatientPrescriptionDetail>> call, Response<List<PatientPrescriptionDetail>> response) {

@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
+        Intent i= getActivity().getIntent();
+        int nurseID=i.getIntExtra("nurseID",0);
         View view= inflater.inflate(R.layout.fragment_home,container,false);
         Button b=view.findViewById(R.id.save);
         binding= FragmentHomeBinding.inflate(getLayoutInflater());
@@ -159,6 +161,7 @@ public class HomeFragment extends Fragment {
                                                     //                mainActivity=(MainActivity)getActivity();
                                                     Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                                     i.putExtra("staticclass", StaticClass.id);
+                                                    i.putExtra("nurseID",nurseID);
 //                                i.putExtra("cnic",p.CNIC);
 //                                i.putExtra("Fullname",p.full_name);
 //                                i.putExtra("relation_name",p.relation);
@@ -210,6 +213,7 @@ public class HomeFragment extends Fragment {
                                                     //                mainActivity=(MainActivity)getActivity();
                                                     Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                                     i.putExtra("staticclass", StaticClass.id);
+                                                    i.putExtra("nurseID",nurseID);
 //                                i.putExtra("cnic",p.CNIC);
 //                                i.putExtra("Fullname",p.full_name);
 //                                i.putExtra("relation_name",p.relation);
@@ -350,12 +354,7 @@ public class HomeFragment extends Fragment {
                                 //                mainActivity=(MainActivity)getActivity();
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                 i.putExtra("staticclass", StaticClass.id);
-//                                i.putExtra("cnic",p.CNIC);
-//                                i.putExtra("Fullname",p.full_name);
-//                                i.putExtra("relation_name",p.relation);
-//                                i.putExtra("patient_name",p.relative_name);
-//                                i.putExtra("DOB",p.DOB);
-//                                i.putExtra("gender",p.Gender);
+                                i.putExtra("nurseID",nurseID);
                                 startActivity(i);
                             }
                         }
@@ -399,12 +398,7 @@ public class HomeFragment extends Fragment {
                                 //                mainActivity=(MainActivity)getActivity();
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                 i.putExtra("staticclass", StaticClass.id);
-//                                i.putExtra("cnic",p.CNIC);
-//                                i.putExtra("Fullname",p.full_name);
-//                                i.putExtra("relation_name",p.relation);
-//                                i.putExtra("patient_name",p.relative_name);
-//                                i.putExtra("DOB",p.DOB);
-//                                i.putExtra("gender",p.Gender);
+                                i.putExtra("nurseID",nurseID);
                                 startActivity(i);
                             }
                         }

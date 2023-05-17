@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.virtualclinic.Adapter.PatientCheckAppointment;
 import com.example.virtualclinic.Models.patientsfullrecord;
 import com.example.virtualclinic.api.Api;
 import com.example.virtualclinic.api.RetrofitClient;

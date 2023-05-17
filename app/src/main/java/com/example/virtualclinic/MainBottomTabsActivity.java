@@ -38,10 +38,10 @@ public class MainBottomTabsActivity extends AppCompatActivity {
                         loadFragment(new HomeFragment());
                         break;
                     }
-                    case R.id.nav_ongoing: {
-                        loadFragment(new OngoingCasesFragment());
-                        break;
-                    }
+//                    case R.id.nav_ongoing: {
+//                        loadFragment(new OngoingCasesFragment());
+//                        break;
+//                    }
                     case R.id.nav_reports: {
                         loadFragment ( new ReportsFragment());
                         break;

@@ -44,7 +44,7 @@
             android:id="@+id/Check_box_All_of_them"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Morning,Evening and Afternoon" />
+            android:text="Morning-Evening and Afternoon" />
     </LinearLayout>
 
     <LinearLayout

@@ -129,12 +129,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String cnic = binding.edittextCNIC.getText().toString();
-                RetrofitClient client =
-                        RetrofitClient.getInstance();
-                Api api = client.getMyApi();
-                Call<PatientObject> call = api.Checkcnic(cnic);
-                call.enqueue(new Callback<PatientObject>() {
+
+                RetrofitClient.getInstance().getMyApi().Checkcnic(s.toString()).enqueue(new Callback<PatientObject>() {
                     @Override
                     public void onResponse(Call<PatientObject> call, Response<PatientObject> response) {
 

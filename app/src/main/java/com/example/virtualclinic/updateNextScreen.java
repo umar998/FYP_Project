@@ -35,7 +35,6 @@ public class updateNextScreen extends AppCompatActivity {
         int patient_id = i.getIntExtra("patient_id", 0);
         String cnic = i.getStringExtra("cnic");
         String full_name = i.getStringExtra("full_name");
-        //String relation_name = i.getStringExtra("relation_name");
         String patientname = i.getStringExtra("patientname");
         String dob = i.getStringExtra("dob");
         //try {

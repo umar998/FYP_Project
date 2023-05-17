@@ -202,6 +202,48 @@ public class SrDocLoginActivity extends AppCompatActivity {
             }
         });
     }
+//    private ArrayList<SrDocAppointments> getAppointments() {
+//        String data = "[\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1066,\n" +
+//                "      \"patient_id\":2061,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:10 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1089\n" +
+//                "   },\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1067,\n" +
+//                "      \"patient_id\":2061,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:47 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1089\n" +
+//                "   },\n" +
+//                "   {\n" +
+//                "      \"appointment_id\":1068,\n" +
+//                "      \"patient_id\":2062,\n" +
+//                "      \"jrdoc_id\":7,\n" +
+//                "      \"rating\":null,\n" +
+//                "      \"date\":\"09/05/2023\",\n" +
+//                "      \"time\":\"10:49 pm\",\n" +
+//                "      \"status\":0,\n" +
+//                "      \"srdoc_id\":1,\n" +
+//                "      \"visit_id\":1090\n" +
+//                "   }\n" +
+//                "]";
+//        Gson gson = new Gson();
+//
+//        return gson.fromJson(data, new TypeToken<ArrayList<SrDocAppointments>>() {
+//        }.getType());
+//
+//    }
     public interface AppointmentClick {
         public void onAppointmentClicked(SrDocAppointments appointments);
     }

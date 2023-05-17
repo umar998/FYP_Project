@@ -88,7 +88,7 @@ public interface Api {
     Call<ArrayList<GettingReports>> Gettingappointments(@Query("nurseid") int nurseid );
 
     @GET("Nursel/GettingDoneaptdetails")
-    Call<List<PatientPrescriptionDetail>>  GettingDoneaptdetails(
+    Call<ResponseBody> GettingDoneaptdetails(
             @Query("aptid") int aptid
     );
 

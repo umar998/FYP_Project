@@ -31,6 +31,7 @@ import com.example.virtualclinic.Models.StaticClass;
 import com.example.virtualclinic.api.Api;
 import com.example.virtualclinic.api.RetrofitClient;
 import com.example.virtualclinic.databinding.FragmentHomeBinding;
+import com.example.virtualclinic.rest.GetRetrofitInstance;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                RetrofitClient.getInstance().getMyApi().Checkcnic(s.toString()).enqueue(new Callback<PatientObject>() {
+                GetRetrofitInstance.getApiService().Checkcnic(s.toString()).enqueue(new Callback<PatientObject>() {
                     @Override
                     public void onResponse(Call<PatientObject> call, Response<PatientObject> response) {
 

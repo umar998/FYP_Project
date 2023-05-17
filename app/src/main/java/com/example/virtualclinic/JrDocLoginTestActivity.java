@@ -278,6 +278,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                                     i.putExtra("date", visitdate);
                                     i.putExtra("time", visittime);
                                     i.putExtra("AssignedDatetime", AssignedDatetime);
+
                                     startActivity(i);
                                 }
                             });

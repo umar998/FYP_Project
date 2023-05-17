@@ -2,42 +2,32 @@ package com.example.virtualclinic;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.virtualclinic.Adapter.Patients_Reports_Adapter;
 import com.example.virtualclinic.Models.GettingReports;
-import com.example.virtualclinic.Models.PatientPrescriptionDetail;
-import com.example.virtualclinic.Models.PatientsReport;
-import com.example.virtualclinic.Models.Prescription;
-import com.example.virtualclinic.Models.PrescriptionAndAppointmnet;
+import com.example.virtualclinic.Models.PatientsDetailedPrescripedModel;
 import com.example.virtualclinic.Models.StaticClass;
 import com.example.virtualclinic.databinding.FragmentReportsBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +37,7 @@ public class ReportsFragment extends Fragment {
     FragmentReportsBinding binding;
     JsonArray jsonArray;
     int nurseid= StaticClass.id;
-    private List<PatientPrescriptionDetail> reportsList;
+    private List<PatientsDetailedPrescripedModel> reportsList;
     private Patients_Reports_Adapter adapter;
 
 
@@ -59,13 +49,9 @@ public class ReportsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         binding.rvReports.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new Patients_Reports_Adapter(new AppointmentClick() {
-            @Override
-            public void onAppointmentClicked(GettingReports report) {
-                getPatientDetails(report);
-            }
-        });
+        adapter = new Patients_Reports_Adapter(report -> getPatientDetails(report));
         binding.rvReports.setAdapter(adapter);
+//        adapter.setData(getDummyData());
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -98,52 +84,80 @@ public class ReportsFragment extends Fragment {
             }
         });
     }
+
+    private List<GettingReports> getDummyData() {
+
+     String data= "[\n" +
+             "   {\n" +
+             "      \"a\":{\n" +
+             "         \"appointment_id\":1087,\n" +
+             "         \"patient_id\":2084,\n" +
+             "         \"jrdoc_id\":7,\n" +
+             "         \"rating\":null,\n" +
+             "         \"date\":\"17/05/2023\",\n" +
+             "         \"time\":\"10:55 am\",\n" +
+             "         \"status\":0,\n" +
+             "         \"srdoc_id\":null,\n" +
+             "         \"visit_id\":1112,\n" +
+             "         \"shown\":0,\n" +
+             "         \"nurseID\":2\n" +
+             "      },\n" +
+             "      \"pat\":{\n" +
+             "         \"patient_id\":2084,\n" +
+             "         \"cnic\":\"1\",\n" +
+             "         \"full_name\":\"Umar\",\n" +
+             "         \"relation\":\"Self\",\n" +
+             "         \"relative_name\":\"\",\n" +
+             "         \"dob\":\"1899\",\n" +
+             "         \"gender\":\"Male\",\n" +
+             "         \"date\":\"17/05/2023\",\n" +
+             "         \"time\":\"10:53 am\"\n" +
+             "      }\n" +
+             "   }\n" +
+             "]";
+
+        return  new Gson().fromJson(data, new TypeToken<ArrayList<GettingReports>>() {
+        }.getType());
+    }
+
     private void getPatientDetails(GettingReports reports)
     {
-        GetRetrofitInstance.getApiService().GettingDoneaptdetails(reports.getSrDocAppointments().getAppointment_id()).enqueue(new Callback<ResponseBody>() {
+        GetRetrofitInstance.getApiService().GettingDoneaptdetails(reports.getSrDocAppointments().getAppointment_id()).enqueue(new Callback<ArrayList<PatientsDetailedPrescripedModel>>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                reportsList= response.body();
-//                if (reportsList != null && reportsList.size() > 0) {
-//                    PatientPrescriptionDetail reportsdata= reportsList.get(0);
-//                    Toast.makeText(requireContext(),"Response "+reportsdata,Toast.LENGTH_LONG).show();
-//                    Intent intent = new Intent(requireContext(), PatientsReportNextActivity.class);
-//                    intent.putExtra("listOfPres", reportsdata);
-//                    //intent.putParcelableArrayListExtra("listOfPres", (ArrayList<? extends Parcelable>) list);
-//                    //intent.putExtra("listOfPres",new JSONArray(list).toString());
-//                    startActivity(intent);
-//                }
-//                else {
-//                    Toast.makeText(requireContext(), "No appointment data available", Toast.LENGTH_SHORT).show();
-//                }
-                Log.d("patientssucess","OK");
-                try {
-                    new Gson().fromJson(response.body().string(), new TypeToken<ArrayList<PatientPrescriptionDetail>>() {
-                    }.getType());
-                } catch (IOException e) {
-                    e.printStackTrace();
+            public void onResponse(Call<ArrayList<PatientsDetailedPrescripedModel>> call, Response<ArrayList<PatientsDetailedPrescripedModel>> response) {
+
+
+
+                  reportsList= response.body();
+                if (reportsList != null && reportsList.size() > 0) {
+                    Intent intent = new Intent(requireContext(), PatientsReportNextActivity.class);
+                    intent.putExtra("listOfPres", new Gson().toJson(reportsList));
+                    //intent.putParcelableArrayListExtra("listOfPres", (ArrayList<? extends Parcelable>) list);
+                    //intent.putExtra("listOfPres",new JSONArray(list).toString());
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(requireContext(), "No appointment data available", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("ErrorPatient",t.getMessage());
-
+            public void onFailure(Call<ArrayList<PatientsDetailedPrescripedModel>> call, Throwable t) {
 
             }
         });
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                getCurrentAppoints(nurseid);
-//            }
-//        }, 5000);
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getCurrentAppoints(nurseid);
+            }
+        }, 5000);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

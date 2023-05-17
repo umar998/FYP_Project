@@ -6,35 +6,34 @@
     android:background="@drawable/backcolor"
     tools:context=".ReportsFragment">
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:id="@+id/text_view_spinner_Provinces"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Patient's Report"
-            android:textAlignment="center"
-            android:textColor="#E91E63"
-            android:textStyle="bold"
-            android:textSize="30dp" />
+    <TextView
+        android:id="@+id/text_view_spinner_Provinces"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Patient's Report"
+        android:textAlignment="center"
+        android:textColor="#E91E63"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/text_view_spinner_Provinces">
+        android:layout_below="@+id/text_view_spinner_Provinces"
+        android:layout_marginTop="10dp">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_reports"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rv_reports"/>
+                android:layout_height="match_parent" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

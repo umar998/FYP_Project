@@ -54,10 +54,6 @@ public class SrDocAppointments  implements Serializable {
         return jrdoc_id;
     }
 
-//    public float getRating() {
-//        return rating;
-//    }
-
     public String getDate() {
         return date;
     }
@@ -78,9 +74,5 @@ public class SrDocAppointments  implements Serializable {
         return visit_id;
     }
 
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeInt(appointment_id);
-//        dest.writeInt(patient_id);
-//        dest.writeInt(je);
-//    }
+
 }

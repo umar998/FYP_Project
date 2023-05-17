@@ -14,8 +14,8 @@ import com.example.virtualclinic.Models.NurseSignup;
 import com.example.virtualclinic.Models.Patient;
 import com.example.virtualclinic.Models.PatientObject;
 import com.example.virtualclinic.Models.PatientPrescriptionDetail;
+import com.example.virtualclinic.Models.PatientsDetailedPrescripedModel;
 import com.example.virtualclinic.Models.Prescription;
-import com.example.virtualclinic.Models.PrescriptionAndAppointmnet;
 import com.example.virtualclinic.Models.SeniorDoctorLogin;
 import com.example.virtualclinic.Models.SrDocAppointments;
 import com.example.virtualclinic.Models.SrDocSignup;
@@ -88,7 +88,7 @@ public interface Api {
     Call<ArrayList<GettingReports>> Gettingappointments(@Query("nurseid") int nurseid );
 
     @GET("Nursel/GettingDoneaptdetails")
-    Call<List<PatientPrescriptionDetail>>  GettingDoneaptdetails(
+    Call<ArrayList<PatientsDetailedPrescripedModel>>  GettingDoneaptdetails(
             @Query("aptid") int aptid
     );
 

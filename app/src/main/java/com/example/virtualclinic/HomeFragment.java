@@ -160,6 +160,13 @@ public class HomeFragment extends Fragment {
                                 binding.RadiaButtonMale.isChecked();
                             else binding.RadiaButtonFeMale.isChecked();
                         }
+                        else
+                        {
+                            binding.edittextFulname.setText("");
+                            //binding.spinnerRelation("");
+                            binding.edittextPatientname.setText("");
+                            binding.edittextDOB.setText("");
+                        }
 
 
 

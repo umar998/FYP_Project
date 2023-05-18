@@ -92,6 +92,11 @@ public interface Api {
             @Query("aptid") int aptid
     );
 
+    @GET("Nursel/FinishDoneAppointment")
+    public Call<String> FinishDoneAppointment(
+            @Query("aptid") int aptid
+    );
+
     @POST("Jrdoc/Jrlogin")
     public Call<JuniorDoctorLogin> JrLogin(
             @Query("email") String email,@Query("password") String password

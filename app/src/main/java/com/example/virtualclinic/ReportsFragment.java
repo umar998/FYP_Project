@@ -132,6 +132,7 @@ public class ReportsFragment extends Fragment {
                 if (reportsList != null && reportsList.size() > 0) {
                     Intent intent = new Intent(requireContext(), PatientsReportNextActivity.class);
                     intent.putExtra("listOfPres", new Gson().toJson(reportsList));
+                    intent.putExtra("aptid",reports.getSrDocAppointments().getAppointment_id());
                     //intent.putParcelableArrayListExtra("listOfPres", (ArrayList<? extends Parcelable>) list);
                     //intent.putExtra("listOfPres",new JSONArray(list).toString());
                     startActivity(intent);

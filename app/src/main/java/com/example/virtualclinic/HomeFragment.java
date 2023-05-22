@@ -90,7 +90,6 @@ public class HomeFragment extends Fragment {
                     p.setCNIC(binding.edittextCNIC.getText().toString());
                     p.setFull_name(binding.edittextFulname.getText().toString());
                     p.setRelation((String) binding.spinnerRelation.getSelectedItem());
-                    if (!((String) binding.spinnerRelation.getSelectedItem()).equals("Self"))
                         p.setRelative_name(binding.edittextPatientname.getText().toString());
                     p.setDOB(binding.edittextDOB.getText().toString());
                     p.setGender(binding.genderRB.getCheckedRadioButtonId() == R.id.Radia_button_Male ? "Male" : "FeMale");
@@ -99,6 +98,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.isSuccessful()){
+                                StaticClass.id = Integer.parseInt(response.body());
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                 i.putExtra("staticclass", StaticClass.id);
                                 i.putExtra("nurseID", nurseID);
@@ -379,37 +379,5 @@ public class HomeFragment extends Fragment {
             return false;
         } else return true;
 
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu, menu);
-        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setIconified(true);
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                mysearch(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                mysearch(query);
-                return true;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private void mysearch(String query) {
     }
 }

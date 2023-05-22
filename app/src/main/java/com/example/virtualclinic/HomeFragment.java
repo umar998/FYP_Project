@@ -102,12 +102,6 @@ public class HomeFragment extends Fragment {
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                 i.putExtra("staticclass", StaticClass.id);
                                 i.putExtra("nurseID", nurseID);
-//                                i.putExtra("cnic",p.CNIC);
-//                                i.putExtra("Fullname",p.full_name);
-//                                i.putExtra("relation_name",p.relation);
-//                                i.putExtra("patient_name",p.relative_name);
-//                                i.putExtra("DOB",p.DOB);
-//                                i.putExtra("gender",p.Gender);
                                 startActivity(i);
                             }
                         }
@@ -361,97 +355,6 @@ public class HomeFragment extends Fragment {
             }
         });
         // Inflate the layout for this fragment
-        binding.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (TextUtils.isEmpty(CNIC.getText().toString()) || (TextUtils.isEmpty(fullname.getText().toString()) || (TextUtils.isEmpty(dob.getText().toString())) )){
-//                    Toast.makeText(requireContext(), "Required Fields are Empty", Toast.LENGTH_LONG).show();
-//                }
-                if (binding.spinnerRelation.getSelectedItem() == "Self") {
-                    String cnic = binding.edittextCNIC.getText().toString();
-                    String Fullname = binding.edittextFulname.getText().toString();
-                    String relation_name = binding.spinnerRelation.getSelectedItem().toString();
-                    String patient_name = "";
-                    String DOB = binding.edittextDOB.getText().toString();
-                    String gender = "Male";
-                    if (binding.RadiaButtonFeMale.isChecked())
-                        gender = "FeMale";
-                    else
-                        gender = "Male";
-                    RetrofitClient client =
-                            RetrofitClient.getInstance();
-                    Api api = client.getMyApi();
-                    Patient p = new Patient();
-                    p.CNIC = cnic;
-                    p.full_name = Fullname;
-                    p.relation = relation_name;
-                    p.relative_name = patient_name;
-                    p.DOB = DOB;
-                    p.Gender = gender;
-                    api.Addpatient(p).enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            if (response.isSuccessful()) {
-                                StaticClass.id = Integer.parseInt(response.body());
-                                Toast.makeText(requireContext(),
-                                        "Saved  " + StaticClass.id,
-                                        Toast.LENGTH_SHORT).show();
-                                //                mainActivity=(MainActivity)getActivity();
-                                Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
-                                i.putExtra("staticclass", StaticClass.id);
-                                i.putExtra("nurseID", nurseID);
-                                startActivity(i);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                        }
-                    });
-                } else {
-                    String cnic = binding.edittextCNIC.getText().toString();
-                    String Fullname = binding.edittextFulname.getText().toString();
-                    String relation_name = binding.spinnerRelation.getSelectedItem().toString();
-                    String patient_name = binding.edittextPatientname.getText().toString();
-                    String DOB = binding.edittextDOB.getText().toString();
-                    String gender = "Male";
-                    if (binding.RadiaButtonFeMale.isChecked())
-                        gender = "FeMale";
-                    else if (binding.RadiaButtonMale.isChecked())
-                        gender = "male";
-                    RetrofitClient client =
-                            RetrofitClient.getInstance();
-                    Api api = client.getMyApi();
-                    Patient p = new Patient();
-                    p.CNIC = cnic;
-                    p.full_name = Fullname;
-                    p.relation = relation_name;
-                    p.relative_name = patient_name;
-                    p.DOB = DOB;
-                    p.Gender = gender;
-                    api.Addpatient(p).enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            if (response.isSuccessful()) {
-                                StaticClass.id = Integer.parseInt(response.body());
-                                Toast.makeText(requireContext(),
-                                        "Saved  " + StaticClass.id,
-                                        Toast.LENGTH_SHORT).show();
-                                //                mainActivity=(MainActivity)getActivity();
-                                Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
-                                i.putExtra("staticclass", StaticClass.id);
-                                i.putExtra("nurseID", nurseID);
-                                startActivity(i);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                        }
-                    });
-                }
-            }
-        });
         return binding.getRoot();
     }
 
@@ -459,10 +362,16 @@ public class HomeFragment extends Fragment {
         if (Objects.equals(binding.edittextCNIC.getText().toString(), "")) {
             Toast.makeText(requireContext(), "Please enter cnic", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (Objects.equals(binding.edittextFulname.getText().toString(), "")) {
+
+        }
+        else if(binding.edittextCNIC.getText().toString().length()<13){
+            Toast.makeText(requireContext(), "Please Valid cnic", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (Objects.equals(binding.edittextFulname.getText().toString(), "")) {
             Toast.makeText(requireContext(), "Please enter full name", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (binding.spinnerRelation.getSelectedItem() != "Self" && !binding.edittextPatientname.getText().toString().equals("")) {
+        } else if (binding.spinnerRelation.getSelectedItem() != "Self" && binding.edittextPatientname.getText().toString().equals("")) {
             Toast.makeText(requireContext(), "Please enter patient name", Toast.LENGTH_SHORT).show();
             return false;
         } else if (binding.edittextDOB.getText().toString().equals("")) {

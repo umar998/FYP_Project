@@ -16,6 +16,8 @@ import com.example.virtualclinic.databinding.ActivityPatientsDetailedBinding;
 import com.example.virtualclinic.databinding.DurationPopupBinding;
 import com.example.virtualclinic.databinding.MedicnePopupBinding;
 import com.example.virtualclinic.databinding.TimingPopupBinding;
+import com.example.virtualclinic.rest.GetRetrofitInstance;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -548,13 +550,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     Prescription prescription=new Prescription(idd,med,duration,timing,currentDateStr);
                     prescriptions.add(prescription);
                 }
-                RetrofitClient client =
-                        RetrofitClient.getInstance();
-                Api api = client.getMyApi();
-
-
-                Call<String> call=api.Addingprescription(prescriptions);
-                call.enqueue(new Callback<String>()
+                GetRetrofitInstance.getApiService().Addingprescription(prescriptions).enqueue(new Callback<String>()
                 {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -566,9 +562,10 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                             ii.putExtra("Docid",Docid);
                             setResult(RESULT_OK,ii);
                             finish();
-                           // Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
+                            // Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
                         }else
                             Toast.makeText(PatientsDetailedActivity.this,"Patients Prescription not Send"+response.code(),Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -576,7 +573,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                         Toast.makeText(PatientsDetailedActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 });
-                api.Updatingvitalstatus(vital_id).enqueue(new Callback<String>() {
+                GetRetrofitInstance.getApiService().Updatingvitalstatus(vital_id).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if(response.isSuccessful())

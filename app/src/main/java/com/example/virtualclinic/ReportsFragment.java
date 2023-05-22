@@ -74,7 +74,7 @@ public class ReportsFragment extends Fragment {
                     Toast.makeText(requireContext(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 } else {
                     adapter.setData(new ArrayList<>());
-                    Toast.makeText(requireContext(), "No Appointments Available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Refreshing", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Prescription extends ArrayList<Parcelable> implements Parcelable {
+public class Prescription implements Parcelable {
     private int appointment_id;
     private String medicine_name;
     private String duration;

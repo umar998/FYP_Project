@@ -126,7 +126,7 @@ public interface Api {
             @Query("cnic") String cnic
     );
     @GET("Jrdoc/MyNewCases")
-    public Call<String> MyNewCases(
+    public Call<ResponseBody> MyNewCases(
             @Query("id") int id
     );
     @GET("Srdoc/MyNewAppointments")

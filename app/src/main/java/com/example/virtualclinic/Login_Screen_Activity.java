@@ -23,19 +23,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Login_Screen_Activity extends AppCompatActivity
-{
+public class Login_Screen_Activity extends AppCompatActivity {
     ActivityLoginScreenBinding binding;
     private Dialog adminDialog;
     TextInputEditText email, password;
     private AdminLoginBinding adminLoginBinding;
-    public  static String docName;
-    String username="admin";
-    String passsword="admin";
+    public static String docName;
+    String username = "admin";
+    String passsword = "admin";
 
-    private void showAdminDialog(){
-        adminDialog=new Dialog(this);
-        adminLoginBinding=AdminLoginBinding.inflate(getLayoutInflater());
+    private void showAdminDialog() {
+        adminDialog = new Dialog(this);
+        adminLoginBinding = AdminLoginBinding.inflate(getLayoutInflater());
         adminDialog.setContentView(adminLoginBinding.getRoot());
         adminDialog.show();
         adminLoginBinding.login.setOnClickListener(new View.OnClickListener() {
@@ -43,15 +42,13 @@ public class Login_Screen_Activity extends AppCompatActivity
             public void onClick(View v) {
 
 
-                String getusername=adminLoginBinding.edittextUsername.getText().toString();
-                String getpassword=adminLoginBinding.edittextPassword.getText().toString();
-                if(getusername.equalsIgnoreCase(username) && getpassword.equalsIgnoreCase(passsword))
-                {
-                    Intent i = new Intent(Login_Screen_Activity.this,AdminLayoutActivity.class);
+                String getusername = adminLoginBinding.edittextUsername.getText().toString();
+                String getpassword = adminLoginBinding.edittextPassword.getText().toString();
+                if (getusername.equalsIgnoreCase(username) && getpassword.equalsIgnoreCase(passsword)) {
+                    Intent i = new Intent(Login_Screen_Activity.this, AdminLayoutActivity.class);
                     startActivity(i);
-                }
-                else
-                    Toast.makeText(Login_Screen_Activity.this,"Incorrect Username/Password",Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(Login_Screen_Activity.this, "Incorrect Username/Password", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -64,18 +61,15 @@ public class Login_Screen_Activity extends AppCompatActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         email = findViewById(R.id.edittext_username);
         password = findViewById(R.id.edittext_password);
-        binding.signup.setOnClickListener(new View.OnClickListener()
-        {
+        binding.signup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Intent i = new Intent(Login_Screen_Activity.this,
                         Signup_Screen_Activity.class);
                 startActivity(i);
@@ -95,18 +89,14 @@ public class Login_Screen_Activity extends AppCompatActivity
                 startActivity(i);
             }
         });
-        binding.save.setOnClickListener(new View.OnClickListener()
-        {
+        binding.save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
 
-                if (TextUtils.isEmpty(email.getText().toString()) || (TextUtils.isEmpty(email.getText().toString())))
-                {
+                if (TextUtils.isEmpty(email.getText().toString()) || (TextUtils.isEmpty(email.getText().toString()))) {
                     Toast.makeText(Login_Screen_Activity.this,
                             "username/password required", Toast.LENGTH_LONG).show();
-                } else
-                {
+                } else {
 
                     Login();
                     //Toast.makeText(Login_Screen_Activity.this,"Welcomm" , Toast.LENGTH_LONG).show();
@@ -114,39 +104,38 @@ public class Login_Screen_Activity extends AppCompatActivity
             }
         });
     }
-    public void Login()
-    {
+
+    public void Login() {
         String username = binding.edittextUsername.getText().toString();
         String password = binding.edittextPassword.getText().toString();
         RetrofitClient client =
                 RetrofitClient.getInstance();
         Api api = client.getMyApi();
-        Call<Nurse> call= api.NurseLogin(username,password);
+        Call<Nurse> call = api.NurseLogin(username, password);
         call.enqueue(new Callback<Nurse>() {
             @Override
             public void onResponse(Call<Nurse> call, Response<Nurse> response) {
-                if(response.isSuccessful())
-                {
-                    Nurse n=response.body();
-                    String full_name=n.getFull_name();
-                    StaticClass.id=n.getNurse_ID();
+                if (response.isSuccessful()) {
+                    Nurse n = response.body();
+                    String full_name = n.getFull_name();
+                    StaticClass.id = n.getNurse_ID();
                     Toast.makeText(Login_Screen_Activity.this,
-                            "Welcome "+ full_name, Toast.LENGTH_SHORT).show();
+                            "Welcome " + full_name, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Login_Screen_Activity.this, MainBottomTabsActivity.class);
-                    i.putExtra("nurseID",StaticClass.id);
+                    i.putExtra("nurseID", StaticClass.id);
                     startActivity(i);
-                }else
-                {
+                } else {
                     Jrlogin();
 
                 }
             }
+
             @Override
             public void onFailure(Call<Nurse> call, Throwable t) {
             }
         });
 
-      //  Toast.makeText(Login_Screen_Activity.this,"Welcomm"+role , Toast.LENGTH_LONG).show();
+        //  Toast.makeText(Login_Screen_Activity.this,"Welcomm"+role , Toast.LENGTH_LONG).show();
 
 
 //        JuniorDoctorLogin j = new JuniorDoctorLogin();
@@ -155,68 +144,56 @@ public class Login_Screen_Activity extends AppCompatActivity
 //        j.role = role;
 
     }
-    public void Jrlogin()
-    {
+
+    public void Jrlogin() {
         String username = binding.edittextUsername.getText().toString();
         String password = binding.edittextPassword.getText().toString();
         RetrofitClient client =
                 RetrofitClient.getInstance();
         Api api = client.getMyApi();
-        Call<JuniorDoctorLogin> calls= api.JrLogin(username,password);
-        calls.enqueue(new Callback<JuniorDoctorLogin>()
-        {
+        Call<JuniorDoctorLogin> calls = api.JrLogin(username, password);
+        calls.enqueue(new Callback<JuniorDoctorLogin>() {
             @Override
-            public void onResponse(Call<JuniorDoctorLogin> call, Response<JuniorDoctorLogin> response)
-            {
-                if(response.isSuccessful())
-                {
-                    JuniorDoctorLogin j=response.body();
-//                    int jrdoc_id=j.getJrdoc_id();
-//                    String full_name=j.getFull_name();
-                    StaticClass.id=j.getJrdoc_id();
-                    StaticClass.docName=j.getFull_name();
+            public void onResponse(Call<JuniorDoctorLogin> call, Response<JuniorDoctorLogin> response) {
+                if (response.isSuccessful()) {
+                    JuniorDoctorLogin j = response.body();
+                    StaticClass.id = j.getJrdoc_id();
+                    StaticClass.docName = j.getFull_name();
                     Toast.makeText(Login_Screen_Activity.this,
-                            "Welcome "+ StaticClass.docName+StaticClass.id, Toast.LENGTH_SHORT).show();
+                            "Welcome " + StaticClass.docName + StaticClass.id, Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Login_Screen_Activity.this, JrDocLoginTestActivity.class);
-                    i.putExtra("jrdoc_id",StaticClass.id);
-                    i.putExtra("full_name",StaticClass.docName);
-//                    StaticClass.docName=full_name;
-//                    StaticClass.id=jrdoc_id;
+                    i.putExtra("jrdoc_id", StaticClass.id);
+                    i.putExtra("full_name", StaticClass.docName);
                     startActivity(i);
-                }
-                else
-                {
+                } else {
                     Srlogin();
                 }
             }
+
             @Override
-            public void onFailure(Call<JuniorDoctorLogin> call, Throwable t)
-            {
+            public void onFailure(Call<JuniorDoctorLogin> call, Throwable t) {
                 Toast.makeText(Login_Screen_Activity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
-    public void Srlogin()
-    {
+
+    public void Srlogin() {
         String username = binding.edittextUsername.getText().toString();
         String password = binding.edittextPassword.getText().toString();
         RetrofitClient client =
                 RetrofitClient.getInstance();
         Api api = client.getMyApi();
-        Call<SeniorDoctorLogin> call=api.Srdoclogin(username,password);
+        Call<SeniorDoctorLogin> call = api.Srdoclogin(username, password);
         call.enqueue(new Callback<SeniorDoctorLogin>() {
             @Override
             public void onResponse(Call<SeniorDoctorLogin> call, Response<SeniorDoctorLogin> response) {
-                if(response.isSuccessful())
-                {
-                    SeniorDoctorLogin s= response.body();
-                    StaticClass.id=s.getSrdoc_id();
-                    StaticClass.docName=s.getFull_name();
+                if (response.isSuccessful()) {
+                    SeniorDoctorLogin s = response.body();
+                    StaticClass.id = s.getSrdoc_id();
+                    StaticClass.docName = s.getFull_name();
                     Intent i = new Intent(Login_Screen_Activity.this, SrDocLoginActivity.class);
-                    i.putExtra("Srdoc_id",StaticClass.id);
-                    i.putExtra("full_name",StaticClass.docName);
-//                    StaticClass.docName=full_name;
-//                    StaticClass.id=jrdoc_id;
+                    i.putExtra("Srdoc_id", StaticClass.id);
+                    i.putExtra("full_name", StaticClass.docName);
                     startActivity(i);
                 }
 

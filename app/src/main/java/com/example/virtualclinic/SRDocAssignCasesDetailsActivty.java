@@ -1,6 +1,5 @@
 package com.example.virtualclinic;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RatingBar;
@@ -12,10 +11,6 @@ import com.example.virtualclinic.Models.AppointmentDataNew;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.api.Api;
 import com.example.virtualclinic.databinding.ActivitySrdocAssignCasesDetailsActivtyBinding;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -75,9 +70,6 @@ public class SRDocAssignCasesDetailsActivty extends AppCompatActivity {
                         "Timing: " + prescription.getTiming() + "\n";
             }
             binding.textviewPrescription.setText(prescriptionText);
-        } else {
-            // Handle the case when prescriptions is null
-            // You can display an appropriate message or take alternative actions
         }
         binding.ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

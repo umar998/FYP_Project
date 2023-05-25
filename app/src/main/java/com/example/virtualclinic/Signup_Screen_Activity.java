@@ -67,8 +67,7 @@ public class Signup_Screen_Activity extends AppCompatActivity {
                             Toast.makeText(Signup_Screen_Activity.this,
                                     "Signed Up",
                                     Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(Signup_Screen_Activity.this, Login_Screen_Activity.class);
-                            startActivity(i);
+                            finish();
                         }
 
                         @Override

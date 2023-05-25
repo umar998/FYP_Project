@@ -31,9 +31,7 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SearchingPatientCNICActivity.this,
-                        Login_Screen_Activity.class);
-                startActivity(i);
+               finish();
             }
         });
 
@@ -41,23 +39,23 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cnic= binding.edittextCNIC.getText().toString();
-                GetRetrofitInstance.getApiService().Gettingdate(cnic).enqueue(new Callback<List<SrDocAppointments>>() {
-                    @Override
-                    public void onResponse(Call<List<SrDocAppointments>> call, Response<List<SrDocAppointments>> response) {
-                        if(response.isSuccessful())
-                        {
-                            srDocAppointments= (SrDocAppointments) response.body();
-                            String date=srDocAppointments.getDate();
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<SrDocAppointments>> call, Throwable t) {
-
-                    }
-                });
+//                GetRetrofitInstance.getApiService().Gettingdate(cnic).enqueue(new Callback<List<SrDocAppointments>>() {
+//                    @Override
+//                    public void onResponse(Call<List<SrDocAppointments>> call, Response<List<SrDocAppointments>> response) {
+//                        if(response.isSuccessful())
+//                        {
+//                            srDocAppointments= (SrDocAppointments) response.body();
+//                            String date=srDocAppointments.getDate();
+//
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<SrDocAppointments>> call, Throwable t) {
+//
+//                    }
+//                });
                 GetRetrofitInstance.getApiService().GetAllPrescriptions(cnic).enqueue(new Callback<List<PatientPrescriptionDetail>>() {
                     @Override
                     public void onResponse(Call<List<PatientPrescriptionDetail>> call, Response<List<PatientPrescriptionDetail>> response) {

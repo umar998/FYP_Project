@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
     SearchView searchView;
     TextInputEditText CNIC, fullname, patientname, dob;
     int patientId = -1;
+    int id=StaticClass.id;
     StaticClass s;
 
     @Override
@@ -100,9 +101,9 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.isSuccessful()){
-                                s.id = Integer.parseInt(response.body());
+                                id = Integer.parseInt(response.body());
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
-                                i.putExtra("staticclass", StaticClass.id);
+                                i.putExtra("staticclass", id);
                                 i.putExtra("nurseID", nurseID);
                                 startActivity(i);
                             }
@@ -121,7 +122,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
-                i.putExtra("staticclass", s.id);
+                i.putExtra("staticclass", id);
                 i.putExtra("nurseID", nurseID);
                 startActivity(i);
             }
@@ -158,7 +159,7 @@ public class HomeFragment extends Fragment {
                                     Log.d("spException", "relation unable to set");
                                 }
                             }
-
+                            id=p.getPatient_id();
                             if (p.getRelative_name() != null && !p.getRelative_name().equals(""))
                                 binding.edittextPatientname.setText(p.getRelative_name());
                             binding.edittextDOB.setText(p.getDob());

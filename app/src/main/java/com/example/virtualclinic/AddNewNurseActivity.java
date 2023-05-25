@@ -44,8 +44,7 @@ public class AddNewNurseActivity extends AppCompatActivity {
                         if(response.isSuccessful())
                         {
                             Toast.makeText(AddNewNurseActivity.this,"Nurse Added", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(AddNewNurseActivity.this,AdminLayoutActivity.class);
-                            startActivity(i);
+                            finish();
                         }
                         else
                             Toast.makeText(AddNewNurseActivity.this,"Not Added", Toast.LENGTH_LONG).show();

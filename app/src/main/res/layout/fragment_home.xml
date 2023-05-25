@@ -102,7 +102,7 @@
                 android:id="@+id/edittext_DOB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="D.O.B" />
+                android:hint="D.O.B: 18/08/1999" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -135,17 +135,33 @@
                 android:text="Female" />
         </RadioGroup>
 
-
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_marginTop="23dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:backgroundTint="@color/teal_700"
-            android:hint="Next"
-            android:textAllCaps="true"
-            android:textColor="#FF5722"
-            android:textStyle="bold|italic" />
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/addvitals"
+                android:layout_marginLeft="90dp"
+                android:layout_width="120dp"
+                android:textStyle="italic"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_700"
+                android:layout_gravity="right"
+                android:hint="Revisit" />
+            <Button
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:backgroundTint="@color/teal_700"
+                android:hint="Add Patient"
+                android:textAllCaps="true"
+                android:textColor="#FF5722"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

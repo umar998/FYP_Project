@@ -15,90 +15,136 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-
-    <RadioGroup
-        android:id="@+id/medRG"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:checkedButton="@id/beflemRg"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/CheckBoxBeflam"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <RadioButton
-                android:id="@+id/beflemRg"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Beflam"/>
-
-
-            <RadioButton
-                android:id="@+id/brufinmRg"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Brufin"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:text="Beflam"/>
+        <CheckBox
+            android:id="@+id/CheckBoxBrufin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <RadioButton
-                android:id="@+id/desprinmRg"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Desprine"/>
-
-
-            <RadioButton
-                android:id="@+id/emoxelmRg"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Emoxel"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:text="Brufin" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/CheckBoxDesprin"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:text="Desprin"/>
+        <CheckBox
+            android:id="@+id/CheckBoxEmoxel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Emoxel" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/CheckBoxPanadol"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="Panadol"/>
+        <CheckBox
+            android:id="@+id/CheckBoxSoftin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Softin" />
+    </LinearLayout>
 
 
-            <RadioButton
-                android:id="@+id/panadolRb"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Panadol"/>
+<!--    <RadioGroup-->
+<!--        android:id="@+id/medRG"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:checkedButton="@id/beflemRg"-->
+<!--        >-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
 
 
-            <RadioButton
-                android:id="@+id/softinRb"
-                android:layout_width="wrap_content"
-                android:width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Softin"/>
-        </LinearLayout>
+<!--            <RadioButton-->
+<!--                android:id="@+id/beflemRg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Beflam"/>-->
+
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/brufinmRg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Brufin"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/desprinmRg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Desprine"/>-->
+
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/emoxelmRg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Emoxel"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/panadolRb"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Panadol"/>-->
+
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/softinRb"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Softin"/>-->
+<!--        </LinearLayout>-->
 
 
 
-    </RadioGroup>
+<!--    </RadioGroup>-->
 
 
     <LinearLayout

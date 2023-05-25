@@ -43,9 +43,9 @@ public class PatientsDetailedActivity extends AppCompatActivity {
     private MedicnePopupBinding medicinebinding;
     private DurationPopupBinding durationPopupBinding;
     private TimingPopupBinding timingPopupBinding;
-    int id = StaticClass.id, visitId = -1;
+    int id = StaticClass.id, visitId = -1 , vitalsId = -1;
 
-    String Timing = "", medicine = "Beflam", Duration = "";
+    String Timing = "", medicine = "", Duration = "";
     ArrayAdapter<String> adapter;
 
 
@@ -56,7 +56,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         medicinebinding = MedicnePopupBinding.inflate(getLayoutInflater());
         medicineDialog.setContentView(medicinebinding.getRoot());
         medicineDialog.show();
-/*
+
         medicinebinding.CheckBoxBeflam.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (medicinebinding.CheckBoxBeflam.isChecked()) {
                 medicinebinding.CheckBoxBrufin.setEnabled(false);
@@ -170,14 +170,14 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     medicinebinding.CheckBoxSoftin.setEnabled(true);
                 }
             }
-        });*/
-        medicinebinding.medRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton button = (RadioButton) radioGroup.findViewById(i);
-                medicine = button.getText().toString();
-            }
         });
+//        medicinebinding.medRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                RadioButton button = (RadioButton) radioGroup.findViewById(i);
+//                medicine = button.getText().toString();
+//            }
+//        });
 
         medicinebinding.ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +185,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
 
 
 
-             /*   if (medicinebinding.CheckBoxBeflam.isChecked()) {
+               if (medicinebinding.CheckBoxBeflam.isChecked()) {
                     medicine = "Beflam";
                     //selectedMedicines.add(medicine);
                 }
@@ -210,7 +210,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                 if (medicinebinding.CheckBoxSoftin.isChecked()) {
                     medicine = "Softin";
                     //selectedMedicines.add(medicine);
-                }*/
+                }
 
                 //Toast.makeText(PatientsDetailedActivity.this,"Medicine :"+medicine,Toast.LENGTH_LONG).show();
                 medicineDialog.dismiss();
@@ -312,7 +312,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
         durationPopupBinding.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                medicineDialog.dismiss();
+                durationDialog.dismiss();
             }
         });
 
@@ -381,14 +381,14 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showMedicineDialog();
-               /* if (medicinebinding.CheckBoxSoftin.isChecked()) {
+                if (medicinebinding.CheckBoxSoftin.isChecked()) {
                     medicinebinding.CheckBoxPanadol.setEnabled(false);
                     medicinebinding.CheckBoxEmoxel.setEnabled(false);
                     medicinebinding.CheckBoxDesprin.setEnabled(false);
                     medicinebinding.CheckBoxBrufin.setEnabled(false);
                     medicinebinding.CheckBoxBeflam.setEnabled(false);
 
-                }*/
+                }
             }
         });
         binding.duration.setOnClickListener(new View.OnClickListener() {
@@ -410,21 +410,26 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                 String time = Timing;
                 String med = medicine;
                 String duraton = Duration;
+                if (med == "" || duraton == "" || time == "") {
+                    Toast.makeText(PatientsDetailedActivity.this, "Please select a medicine", Toast.LENGTH_LONG).show();
+                } else
+                {
 
-                String prescription = "Timing: " + time + ", Medicine: " + med + ", Duration: " + duraton;// Check if the medicine already exists in the adapter
-                boolean isAlreadyAdded = false;
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    String item = adapter.getItem(i);
-                    if (item.contains(med)) {
-                        isAlreadyAdded = true;
-                        break;
+                    String prescription = "Timing: " + time + ", Medicine: " + med + ", Duration: " + duraton;// Check if the medicine already exists in the adapter
+                    boolean isAlreadyAdded = false;
+                    for (int i = 0; i < adapter.getCount(); i++) {
+                        String item = adapter.getItem(i);
+                        if (item.contains(med)) {
+                            isAlreadyAdded = true;
+                            break;
+                        }
                     }
-                }
-                if (isAlreadyAdded)
-                    Toast.makeText(PatientsDetailedActivity.this, "This Medicine is already added", Toast.LENGTH_LONG).show();
-                else {
-                    adapter.add(prescription);
-                    adapter.notifyDataSetChanged();
+                    if (isAlreadyAdded)
+                        Toast.makeText(PatientsDetailedActivity.this, "This Medicine is already added", Toast.LENGTH_LONG).show();
+                    else {
+                        adapter.add(prescription);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -441,18 +446,25 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             JSONObject vitalObj = firstItem.getJSONObject("v");
             JSONObject visitsObj = firstItem.getJSONObject("x");
             visitId = visitsObj.getInt("visit_id");
-            binding.textviewPatientname.setText(pObj.getString("full_name"));
+            vitalsId=vitalObj.getInt("vitalID");
+
+
             binding.textviewPatientDOB.setText(pObj.getString("dob"));
             binding.textviewGender.setText(pObj.getString("gender"));
-            binding.textviewBP.setText(visitsObj.getString("blood_pressure"));
-            binding.textviewSugar.setText(visitsObj.getString("sugar"));
-            binding.textviewTemp.setText(visitsObj.getString("temperature"));
-            binding.textviewSymptoms.setText(visitsObj.getString("symptoms"));
+            binding.textviewBP.setText(vitalObj.getString("blood_pressure"));
+            binding.textviewSugar.setText(vitalObj.getString("sugar"));
+            binding.textviewTemp.setText(vitalObj.getString("temperature"));
+            binding.textviewSymptoms.setText(vitalObj.getString("symptoms"));
             if (!pObj.getString("relation").equals("Self"))
                 binding.textviewPatientname.setText(pObj.getString("relative_name"));
-            if (pObj.has("image") && !pObj.getString("image").equals("")) {
-                Glide.with(binding.imagesss).load(Api.BASE_URL2 + pObj.getString("image")).into(binding.imagesss);
-            }
+            else
+                binding.textviewPatientname.setText(pObj.getString("full_name"));
+
+            Toast.makeText(PatientsDetailedActivity.this,"Image"+vitalObj.getString("image"),Toast.LENGTH_LONG).show();
+//            if (vitalObj.has("image") && !pObj.getString("image").equals("")) {
+//                Glide.with(binding.imagesss).load(Api.BASE_URL2 + vitalObj.getString("image")).into(binding.imagesss);
+//            }
+            Glide.with(binding.imagesss).load(Api.BASE_URL2 + vitalObj.getString("image")).into(binding.imagesss);
             GetRetrofitInstance.getApiService().Gettingappointmentid(pObj.getInt("patient_id")).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -476,51 +488,59 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<Prescription> prescriptions = new ArrayList<>();
-                for (int i = 0; i < adapter.getCount(); i++) {
-                    String timing = adapter.getItem(i).split(",")[0].split(":")[1].trim();
-                    String duration = "" + adapter.getItem(i).split(",")[2].split(" ")[2] + " Days";
-                    String med = adapter.getItem(i).split(",")[1].split(":")[1].trim();
-                    int idd = id;
-                    Calendar calendar = Calendar.getInstance();
-                    int year = calendar.get(Calendar.YEAR);
-                    int month = calendar.get(Calendar.MONTH) + 1; // Note: months are zero-based
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    String currentDateStr = day + "/" + month + "/" + year;
-                    Prescription prescription = new Prescription(idd, med, duration, timing, currentDateStr);
-                    prescriptions.add(prescription);
+                if(binding.listviewpatientmedicnes.getAdapter().getCount()==0)
+                {
+                    Toast.makeText(PatientsDetailedActivity.this, "Please add prescription", Toast.LENGTH_SHORT).show();
                 }
-                GetRetrofitInstance.getApiService().Addingprescription(prescriptions).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(PatientsDetailedActivity.this, "Patients Prescription Send", Toast.LENGTH_LONG).show();
-                            Intent ii = new Intent(PatientsDetailedActivity.this, JrDocLoginTestActivity.class);
-                            ii.putExtra("Docfull_name", Docfull_name);
-                            ii.putExtra("Docid", Docid);
-                            setResult(RESULT_OK, ii);
-                            finish();
-                            // Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
-                        } else
-                            Toast.makeText(PatientsDetailedActivity.this, "Patients Prescription not Send" + response.code(), Toast.LENGTH_LONG).show();
-
+                else {
+                    for (int i = 0; i < adapter.getCount(); i++) {
+                        String timing = adapter.getItem(i).split(",")[0].split(":")[1].trim();
+                        String duration = "" + adapter.getItem(i).split(",")[2].split(" ")[2] + " Days";
+                        String med = adapter.getItem(i).split(",")[1].split(":")[1].trim();
+                        int idd = id;
+                        Calendar calendar = Calendar.getInstance();
+                        int year = calendar.get(Calendar.YEAR);
+                        int month = calendar.get(Calendar.MONTH) + 1; // Note: months are zero-based
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        String currentDateStr = day + "/" + month + "/" + year;
+                        Prescription prescription = new Prescription(idd, med, duration, timing, currentDateStr);
+                        prescriptions.add(prescription);
                     }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(PatientsDetailedActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-                GetRetrofitInstance.getApiService().Updatingvitalstatus(visitId).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful())
-                            Toast.makeText(PatientsDetailedActivity.this, "vitals updated", Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                    }
-                });
+                    GetRetrofitInstance.getApiService().Addingprescription(prescriptions).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(PatientsDetailedActivity.this, "Patients Prescription Send", Toast.LENGTH_LONG).show();
+                                Intent ii = new Intent(PatientsDetailedActivity.this, JrDocLoginTestActivity.class);
+                                ii.putExtra("Docfull_name", Docfull_name);
+                                ii.putExtra("Docid", Docid);
+                                setResult(RESULT_OK, ii);
+                                finish();
+                                // Toast.makeText(PatientsDetailedActivity.this,"Patients id you want to send "+patient_id,Toast.LENGTH_LONG).show();
+                            } else
+                                Toast.makeText(PatientsDetailedActivity.this, "Patients Prescription not Send" + response.code(), Toast.LENGTH_LONG).show();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(PatientsDetailedActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    GetRetrofitInstance.getApiService().Updatingvitalstatus(vitalsId).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful())
+                                Toast.makeText(PatientsDetailedActivity.this, "vitals updated", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                        }
+                    });
+                }
             }
         });
         //Toast.makeText(PatientsDetailedActivity.this,"This is : "+patient_id,Toast.LENGTH_LONG).show();

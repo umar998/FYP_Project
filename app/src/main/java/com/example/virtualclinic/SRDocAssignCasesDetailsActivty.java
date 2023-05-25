@@ -110,11 +110,11 @@ public class SRDocAssignCasesDetailsActivty extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(SRDocAssignCasesDetailsActivty.this, "Rating's Done", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(SRDocAssignCasesDetailsActivty.this, SrDocLoginActivity.class);
-                            i.putExtra("Doc_full_name", Doc_full_name);
-                            i.putExtra("Doc_id", Doc_id);
-                            // i.putParcelableArrayListExtra("updatedAppointments", (ArrayList<? extends Parcelable>) updatedAppointments);
-                            setResult(RESULT_OK, i);
+//                            Intent i = new Intent(SRDocAssignCasesDetailsActivty.this, SrDocLoginActivity.class);
+//                            i.putExtra("Doc_full_name", Doc_full_name);
+//                            i.putExtra("Doc_id", Doc_id);
+//                            // i.putParcelableArrayListExtra("updatedAppointments", (ArrayList<? extends Parcelable>) updatedAppointments);
+//                            setResult(RESULT_OK, i);
                             finish();
                             //startActivity(i);
                         } else {
@@ -127,6 +127,8 @@ public class SRDocAssignCasesDetailsActivty extends AppCompatActivity {
                         Toast.makeText(SRDocAssignCasesDetailsActivty.this, t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+
+
                 binding.ratingbar.setRating(0);
                 binding.ratecount.setText("");
             }

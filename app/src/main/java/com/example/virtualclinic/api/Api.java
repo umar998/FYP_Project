@@ -40,8 +40,8 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
-    public  static String BASE_URL2="http://192.168.28.198/fyp/Content/Uploads/";
-    public  static String BASE_URL="http://192.168.28.198/fyp/api/";
+    public  static String BASE_URL2="http://192.168.26.198/fyp/Content/Uploads/";
+    public  static String BASE_URL="http://192.168.26.198/fyp/api/";
 
     @POST("Jrdoc/Jrsignup")
     public Call<String> Jrsignup(
@@ -92,7 +92,7 @@ public interface Api {
             @Query("aptid") int aptid
     );
 
-    @GET("Nursel/FinishDoneAppointment")
+    @POST("Nursel/FinishDoneAppointment")
     public Call<String> FinishDoneAppointment(
             @Query("aptid") int aptid
     );

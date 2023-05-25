@@ -104,8 +104,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(JrDocLoginTestActivity.this, "Logout", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(JrDocLoginTestActivity.this, Login_Screen_Activity.class);
-                            startActivity(i);
+                            finish();
                         } else {
                             Toast.makeText(JrDocLoginTestActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
                         }
@@ -210,7 +209,7 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
     private void parseNewCaseRespnse(Response<ResponseBody> response) {
         try {
             String jsonResponse = response.body().string();
-            rootNewCaseResponse = response.body().string();
+            rootNewCaseResponse = jsonResponse;
 
             JSONArray rootObj = new JSONArray(jsonResponse);
             JSONObject firstItem = rootObj.getJSONObject(0);

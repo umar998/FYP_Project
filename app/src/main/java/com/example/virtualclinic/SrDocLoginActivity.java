@@ -78,8 +78,7 @@ public class SrDocLoginActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(SrDocLoginActivity.this, "Logout", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(SrDocLoginActivity.this, Login_Screen_Activity.class);
-                            startActivity(i);
+                            finish();
                         } else {
                             Toast.makeText(SrDocLoginActivity.this, "Failed", Toast.LENGTH_LONG).show();
                         }

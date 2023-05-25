@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
     SearchView searchView;
     TextInputEditText CNIC, fullname, patientname, dob;
     int patientId = -1;
+    StaticClass s;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -82,7 +83,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        binding.save.setOnClickListener(new View.OnClickListener() {
+        binding.save.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 if (validate()) {
@@ -98,7 +100,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.isSuccessful()){
-                                StaticClass.id = Integer.parseInt(response.body());
+                                s.id = Integer.parseInt(response.body());
                                 Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
                                 i.putExtra("staticclass", StaticClass.id);
                                 i.putExtra("nurseID", nurseID);
@@ -112,6 +114,16 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
+            }
+        });
+
+        binding.addvitals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), NextPageofNurseAddNewPatientActivity.class);
+                i.putExtra("staticclass", s.id);
+                i.putExtra("nurseID", nurseID);
+                startActivity(i);
             }
         });
 

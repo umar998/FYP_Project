@@ -43,8 +43,7 @@ public class AddNewSrDocActivity extends AppCompatActivity {
                         if(response.isSuccessful())
                         {
                             Toast.makeText(AddNewSrDocActivity.this,"Senior Doctor Added", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(AddNewSrDocActivity.this,AdminLayoutActivity.class);
-                            startActivity(i);
+                            finish();
                         }
                         else
                             Toast.makeText(AddNewSrDocActivity.this,"Not Added", Toast.LENGTH_LONG).show();

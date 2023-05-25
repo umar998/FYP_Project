@@ -61,24 +61,7 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
             photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
         }
-//        else if(requestCode==Gallery_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null && data.getData() != null)
-//        {
-//            if (resultCode == RESULT_OK)
-//            {
-//                imageuri= data.getData();
-//                byte[] imageData=convertImageToByteArray(imageuri);
-//                sendImageDataToApi(imageData);
-//                //binding.imagesss.setImageURI(imageData);
-//
-//                if(imageuri==null||imageuri.equals("")){
-//                    Toast.makeText(NextPageofNurseAddNewPatientActivity.this,
-//                            "NUll oyy",Toast.LENGTH_LONG).show();
-//
-//                }else{
-//                    binding.imagesss.setImageURI(imageuri);
-//                }
-//            }
-//        }
+
         super.onActivityResult(requestCode, resultCode, data);
 //        if(requestCode==CAMERA_REQUEST_CODE)
 //        {

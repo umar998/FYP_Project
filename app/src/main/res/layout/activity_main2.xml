@@ -24,4 +24,82 @@
         android:layout_height="wrap_content"
         android:text="GET"/>
 
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical">-->
+<!--        -->
+<!--        <TextView-->
+<!--            -->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="37dp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textStyle="bold"-->
+<!--            android:hint="Profile"/>-->
+<!--        <ImageView android:id="@+id/profile"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="130dp"-->
+<!--            android:src="@drawable/ic_launcher_foreground"-->
+<!--            android:layout_width="150dp"/>-->
+<!--        -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="25dp"-->
+<!--                android:hint="Fridge"/>-->
+<!--            <Button-->
+<!--                android:id="@+id/sendinvite"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:textStyle="italic"-->
+<!--                android:hint="Send Invite"-->
+<!--                android:layout_marginLeft="200dp"-->
+<!--                android:textColor="@color/purple_700" />-->
+<!--            -->
+<!--        </LinearLayout>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="25dp"-->
+<!--            android:hint="Connected Fridge"/>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+<!--            <TextView-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:id="@+id/obaidfridge"-->
+<!--                android:layout_marginLeft="100dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="25dp"-->
+<!--                android:hint="Obaid Fridge"/>-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="90dp"-->
+<!--                android:id="@+id/mudassirfridge"-->
+<!--                android:textSize="25dp"-->
+<!--                android:hint="Mudassir Fridge"/>-->
+<!--        </LinearLayout>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textSize="25dp"-->
+<!--            android:hint="Connected Users"/>-->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--           -->
+<!--            android:id="@+id/rv_users"/>-->
+<!--    </LinearLayout>-->
+
+
 </LinearLayout>

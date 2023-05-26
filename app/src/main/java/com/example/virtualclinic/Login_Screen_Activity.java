@@ -196,6 +196,8 @@ public class Login_Screen_Activity extends AppCompatActivity {
                     i.putExtra("full_name", StaticClass.docName);
                     startActivity(i);
                 }
+                else
+                    Toast.makeText(Login_Screen_Activity.this,"Enter Correct username/Password" , Toast.LENGTH_LONG).show();
 
             }
 

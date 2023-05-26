@@ -47,7 +47,10 @@ public class Signup_Screen_Activity extends AppCompatActivity {
                     else if (binding.RadiaButtonMale.isChecked())
                         gender = "Male";
                     String role = "JrDoc";
-                    String contact = binding.edittextContact.getText().toString();
+                     String contact = binding.edittextContact.getText().toString();
+                if(Fathername.isEmpty()||Fullname.isEmpty()||DOB.isEmpty()||username.isEmpty()||password.isEmpty()||contact.isEmpty())
+                    Toast.makeText(Signup_Screen_Activity.this,"Enter required fields",Toast.LENGTH_LONG).show();
+                else {
                     RetrofitClient client =
                             RetrofitClient.getInstance();
                     Api api = client.getMyApi();
@@ -77,6 +80,7 @@ public class Signup_Screen_Activity extends AppCompatActivity {
 
                         }
                     });
+                }
             }
         });
     }

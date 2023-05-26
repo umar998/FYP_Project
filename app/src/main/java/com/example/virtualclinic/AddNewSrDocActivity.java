@@ -30,30 +30,32 @@ public class AddNewSrDocActivity extends AppCompatActivity {
                 String fullname=binding.edittextFullname.getText().toString();
                 String username=binding.edittextUsername.getText().toString();
                 String password=binding.edittextPassword.getText().toString();
-                RetrofitClient client =
-                        RetrofitClient.getInstance();
-                Api api = client.getMyApi();
-                SrDocSignup s= new SrDocSignup();
-                s.full_name=fullname;
-                s.email=username;
-                s.password=password;
-                api.Addnewsrdoc(s).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.isSuccessful())
-                        {
-                            Toast.makeText(AddNewSrDocActivity.this,"Senior Doctor Added", Toast.LENGTH_LONG).show();
-                            finish();
+                if(fullname.isEmpty()||username.isEmpty()||password.isEmpty())
+                    Toast.makeText(AddNewSrDocActivity.this,"Required fields are empty",Toast.LENGTH_LONG).show();
+                else {
+                    RetrofitClient client =
+                            RetrofitClient.getInstance();
+                    Api api = client.getMyApi();
+                    SrDocSignup s = new SrDocSignup();
+                    s.full_name = fullname;
+                    s.email = username;
+                    s.password = password;
+                    api.Addnewsrdoc(s).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(AddNewSrDocActivity.this, "Senior Doctor Added", Toast.LENGTH_LONG).show();
+                                finish();
+                            } else
+                                Toast.makeText(AddNewSrDocActivity.this, "Not Added", Toast.LENGTH_LONG).show();
                         }
-                        else
-                            Toast.makeText(AddNewSrDocActivity.this,"Not Added", Toast.LENGTH_LONG).show();
-                    }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
         binding.back.setOnClickListener(new View.OnClickListener() {

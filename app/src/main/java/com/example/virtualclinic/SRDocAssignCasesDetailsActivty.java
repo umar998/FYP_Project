@@ -91,6 +91,7 @@ public class SRDocAssignCasesDetailsActivty extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 temp = Float.parseFloat(binding.ratecount.getText().toString());
+
                 Toast.makeText(SRDocAssignCasesDetailsActivty.this, "Rating :" + temp, Toast.LENGTH_LONG).show();
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(Api.BASE_URL)
                         .addConverterFactory(ScalarsConverterFactory.create())

@@ -150,7 +150,7 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                 String bpResult=systolic+"  "+diastolic;
                 String sugar = binding.EdittextSugar.getText().toString();
                 String temp = binding.EdittextTemperature.getText().toString();
-                String Symptoms=" ";
+                String Symptoms="";
                 if(binding.CheckBoxCough.isChecked())
                     Symptoms=Symptoms+"Cough, ";
                 if(binding.CheckBoxBackpain.isChecked())
@@ -167,19 +167,21 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 int Patients_id = i.getIntExtra("staticclass",0);
                 int nurseID=i.getIntExtra("nurseID",0);
-                RetrofitClient client=RetrofitClient.getInstance();
-                Api api=client.getMyApi();
-                MultipartBody.Part photo;
-                if(imageuri != null) {
-                    File file = new File(imageuri.toString());
-                    // rest of the code
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("photo/*"), file);
-                    photo = MultipartBody.Part.createFormData("photo", file.getName(), requestBody);
-                }
+                if(systolic.isEmpty()||diastolic.isEmpty()||sugar.isEmpty()||temp.isEmpty()||res.equals(""))
+                    Toast.makeText(NextPageofNurseAddNewPatientActivity.this,"Enter Required Fields",Toast.LENGTH_LONG).show();
                 else {
-                    RequestBody photoData = RequestBody.create(MediaType.parse("text/plain"), "");
-                    photo = MultipartBody.Part.createFormData("photo", "", photoData);
-                }
+                    RetrofitClient client = RetrofitClient.getInstance();
+                    Api api = client.getMyApi();
+                    MultipartBody.Part photo;
+                    if (imageuri != null) {
+                        File file = new File(imageuri.toString());
+                        // rest of the code
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("photo/*"), file);
+                        photo = MultipartBody.Part.createFormData("photo", file.getName(), requestBody);
+                    } else {
+                        RequestBody photoData = RequestBody.create(MediaType.parse("text/plain"), "");
+                        photo = MultipartBody.Part.createFormData("photo", "", photoData);
+                    }
                     RequestBody PIdd = RequestBody.create(MediaType.parse("text/plain"), Patients_id + "");
                     RequestBody bbp = RequestBody.create(MediaType.parse("text/plain"), bpResult);
                     RequestBody sugarr = RequestBody.create(MediaType.parse("text/plain"), sugar);
@@ -187,8 +189,7 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                     RequestBody symp = RequestBody.create(MediaType.parse("text/plain"), res);
                     api.Addvitals(photo, PIdd, bbp, sugarr, temperature, symp).enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response)
-                        {
+                        public void onResponse(Call<String> call, Response<String> response) {
                             if (response.isSuccessful()) {
                                 Toast.makeText(NextPageofNurseAddNewPatientActivity.this,
                                         "Patient Added",
@@ -200,31 +201,31 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                                 Toast.makeText(NextPageofNurseAddNewPatientActivity.this, "Failed" + response.code(), Toast.LENGTH_LONG).show();
                             }
                         }
+
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
                             Toast.makeText(NextPageofNurseAddNewPatientActivity.this, " " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                api.Visits(Patients_id,nurseID).enqueue(new Callback<StaticClass>()
-                {
-                    @Override
-                    public void onResponse(Call<StaticClass> call, Response<StaticClass> response)
-                    {
-                        if(response.isSuccessful()) {
-                            Toast.makeText(NextPageofNurseAddNewPatientActivity.this,
-                                    "Visits also Added",
-                                    Toast.LENGTH_SHORT).show();
+                    api.Visits(Patients_id, nurseID).enqueue(new Callback<StaticClass>() {
+                        @Override
+                        public void onResponse(Call<StaticClass> call, Response<StaticClass> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(NextPageofNurseAddNewPatientActivity.this,
+                                        "Visits also Added",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
 
+                        @Override
+                        public void onFailure(Call<StaticClass> call, Throwable t) {
+                            //Toast.makeText(NextPageofNurseAddNewPatientActivity.this,t.toString(),Toast.LENGTH_LONG).show();
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<StaticClass> call, Throwable t) {
-                        //Toast.makeText(NextPageofNurseAddNewPatientActivity.this,t.toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         });
 

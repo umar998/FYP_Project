@@ -125,7 +125,19 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                 binding.swipeContainer.setRefreshing(false);
             }
         });
+
         makeApiCall();
+        GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
         binding.accept.setOnClickListener(view -> {
             if (patientID != -1 && visitID != -1) {
                 GetRetrofitInstance.getApiService().AcceptedCase(jrDocId, patientID, visitID).enqueue(new Callback<String>() {

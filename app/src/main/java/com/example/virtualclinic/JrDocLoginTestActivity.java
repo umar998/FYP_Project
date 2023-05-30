@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -127,19 +129,10 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
         });
 
         makeApiCall();
-        GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
         binding.accept.setOnClickListener(view -> {
-            if (patientID != -1 && visitID != -1) {
+            if (patientID != -1 && visitID != -1)
+            {
                 GetRetrofitInstance.getApiService().AcceptedCase(jrDocId, patientID, visitID).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -220,6 +213,33 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
 
     private void parseNewCaseRespnse(Response<ResponseBody> response) {
         try {
+            // Start the timer
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    // Code to be executed after 10 seconds
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.patientName.setText("");
+                            binding.patientAge.setText("");
+                            GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+
+                                }
+                            });
+                        }
+                    });
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 10000); // 10 seconds
             String jsonResponse = response.body().string();
             rootNewCaseResponse = jsonResponse;
 

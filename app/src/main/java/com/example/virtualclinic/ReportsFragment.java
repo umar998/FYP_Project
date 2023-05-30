@@ -71,10 +71,10 @@ public class ReportsFragment extends Fragment {
                 if (response.body().size() != 0) {
 
                     adapter.setData(response.body());
-                    Toast.makeText(requireContext(), ""+response.code(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(requireContext(), ""+response.code(), Toast.LENGTH_SHORT).show();
                 } else {
                     adapter.setData(new ArrayList<>());
-                    Toast.makeText(requireContext(), "Refreshing", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(requireContext(), "Refreshing", Toast.LENGTH_SHORT).show();
                 }
             }
 

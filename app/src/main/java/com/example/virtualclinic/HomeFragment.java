@@ -377,7 +377,7 @@ public class HomeFragment extends Fragment {
             return false;
 
         }
-        else if(binding.edittextCNIC.getText().toString().length()<13){
+        else if(binding.edittextCNIC.getText().toString().length()<13||binding.edittextCNIC.getText().toString().length()>13){
             Toast.makeText(requireContext(), "Please Valid cnic", Toast.LENGTH_SHORT).show();
             return false;
         }

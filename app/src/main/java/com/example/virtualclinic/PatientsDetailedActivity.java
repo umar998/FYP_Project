@@ -460,7 +460,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             else
                 binding.textviewPatientname.setText(pObj.getString("full_name"));
 
-            Toast.makeText(PatientsDetailedActivity.this,"Image"+vitalObj.getString("image"),Toast.LENGTH_LONG).show();
+//            Toast.makeText(PatientsDetailedActivity.this,"Image"+vitalObj.getString("image"),Toast.LENGTH_LONG).show();
 //            if (vitalObj.has("image") && !pObj.getString("image").equals("")) {
 //                Glide.with(binding.imagesss).load(Api.BASE_URL2 + vitalObj.getString("image")).into(binding.imagesss);
 //            }

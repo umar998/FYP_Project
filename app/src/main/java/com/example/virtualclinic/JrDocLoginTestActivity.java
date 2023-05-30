@@ -124,6 +124,17 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 makeApiCall();
+                GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
                 binding.swipeContainer.setRefreshing(false);
             }
         });
@@ -133,35 +144,43 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
         binding.accept.setOnClickListener(view -> {
             if (patientID != -1 && visitID != -1)
             {
-                GetRetrofitInstance.getApiService().AcceptedCase(jrDocId, patientID, visitID).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()) {
-                        } else
-                            Toast.makeText(JrDocLoginTestActivity.this, "Accepted Case Failed", Toast.LENGTH_LONG).show();
-                    }
+                if(binding.patientName.equals("") && binding.patientAge.equals(""))
+                {
+                    Toast.makeText(JrDocLoginTestActivity.this, "No Patients Available", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    GetRetrofitInstance.getApiService().AcceptedCase(jrDocId, patientID, visitID).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful())
+                            {
+                            }
+ //                           else
+//                                Toast.makeText(JrDocLoginTestActivity.this, "Accepted Case Failed", Toast.LENGTH_LONG).show();
+                        }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(JrDocLoginTestActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-                RetrofitClient.getInstance().getMyApi().Appointment(patientID, jrDocId, visitID, nurseId).enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.isSuccessful()) {
-                            //Toast.makeText(JrDocLoginTestActivity.this, "Appointment", Toast.LENGTH_LONG).show();
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(JrDocLoginTestActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    RetrofitClient.getInstance().getMyApi().Appointment(patientID, jrDocId, visitID, nurseId).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.isSuccessful()) {
+                                //Toast.makeText(JrDocLoginTestActivity.this, "Appointment", Toast.LENGTH_LONG).show();
 
 
-                        } else
-                            Toast.makeText(JrDocLoginTestActivity.this, "Failed", Toast.LENGTH_LONG).show();
-                    }
+                            } else
+                                Toast.makeText(JrDocLoginTestActivity.this, "Failed", Toast.LENGTH_LONG).show();
+                        }
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                }
 
 
                 try {
@@ -218,11 +237,15 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     // Code to be executed after 10 seconds
-                    runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable()
+                    {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
+
                             binding.patientName.setText("");
                             binding.patientAge.setText("");
+                            makeApiCall();
                             GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
@@ -234,12 +257,24 @@ public class JrDocLoginTestActivity extends AppCompatActivity {
 
                                 }
                             });
+
                         }
                     });
                 }
             };
             Timer timer = new Timer();
             timer.schedule(task, 10000); // 10 seconds
+            GetRetrofitInstance.getApiService().CalculateRatingAndAssingToJrdoc(jrDocId).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
             String jsonResponse = response.body().string();
             rootNewCaseResponse = jsonResponse;
 

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="800dp"
-    android:orientation="vertical"
     android:background="@drawable/backcolor"
     tools:context=".PatientsDetailedActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -162,6 +165,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="14dp"
+        android:text="Comments/Test"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textSize="13dp"
+        android:id="@+id/textview_comments"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
         android:text="Precription"
         android:textAllCaps="true"
         android:textColor="#009688"
@@ -226,8 +244,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listviewpatientmedicnes"/>
+    </LinearLayout>
 
 
 
-
-</LinearLayout>
+</ScrollView>

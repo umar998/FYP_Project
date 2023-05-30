@@ -109,10 +109,15 @@ public interface Api {
     public Call<String> Gettingappointmentid(
             @Query("patid") int patid
     );
+    @POST("Jrdoc/CommentsTest")
+    public Call<String> CommentsTest(
+            @Query("aptid") int aptid,@Query("comments") String comments
+    );
     @POST("Jobs/CalculateRatingAndAssingToJrdoc")
     public Call<String> CalculateRatingAndAssingToJrdoc(
             @Query("jrdocid") int jrdocid
     );
+
     @POST("Jrdoc/Appointment")
     public Call<String> Appointment(
             @Query("patid") int patid,@Query("jrdocid") int jrdocid,@Query("visitid") int visitid,@Query("nurseID") int nurseID

@@ -31,9 +31,24 @@
         android:textStyle="bold" />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:textSize="20dp"
         android:id="@+id/textview_prescription"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="14dp"
+        android:textAlignment="center"
+        android:text="Comments/Test"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:textSize="20dp"
+        android:id="@+id/textview_comments"/>
     <Button
         android:id="@+id/send"
         android:layout_width="wrap_content"

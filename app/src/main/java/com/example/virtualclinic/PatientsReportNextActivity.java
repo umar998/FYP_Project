@@ -39,14 +39,17 @@ public class PatientsReportNextActivity extends AppCompatActivity {
         }.getType());
             aptid=getIntent().getIntExtra("aptid",0);
         }
-        String prescriptionText = "";
+        String prescriptionText = "",comments="";
         if (prescriptionlist != null) {
             for (PatientsDetailedPrescripedModel prescription : prescriptionlist) {
                 prescriptionText += "Medicine: " + prescription.getMyPatientP().getMedicine_name()+ "  " +
                         "Duration: " + prescription.getMyPatientP().getDuration() + "  " +
                         "Timing: " + prescription.getMyPatientP().getTimings() + "\n";
+                comments+=prescription.getMyPatientT().getComments();
             }
             binding.textviewPrescription.setText(prescriptionText);
+            binding.textviewComments.setText(comments);
+
         } else {
             // Handle the case when prescriptions is null
             // You can display an appropriate message or take alternative actions

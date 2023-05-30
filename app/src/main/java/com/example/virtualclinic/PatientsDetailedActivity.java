@@ -1,38 +1,28 @@
 package com.example.virtualclinic;
-
 import static com.example.virtualclinic.JrDocLoginTestActivity.Docfull_name;
 import static com.example.virtualclinic.JrDocLoginTestActivity.Docid;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.virtualclinic.Models.Prescription;
 import com.example.virtualclinic.Models.StaticClass;
 import com.example.virtualclinic.api.Api;
-import com.example.virtualclinic.api.RetrofitClient;
 import com.example.virtualclinic.databinding.ActivityPatientsDetailedBinding;
 import com.example.virtualclinic.databinding.DurationPopupBinding;
 import com.example.virtualclinic.databinding.MedicnePopupBinding;
 import com.example.virtualclinic.databinding.TimingPopupBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +33,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
     private MedicnePopupBinding medicinebinding;
     private DurationPopupBinding durationPopupBinding;
     private TimingPopupBinding timingPopupBinding;
-    int id = StaticClass.id, visitId = -1 , vitalsId = -1;
+    int id = StaticClass.id, visitId = -1 , vitalsId = -1 ;
 
     String Timing = "", medicine = "", Duration = "";
     ArrayAdapter<String> adapter;
@@ -449,6 +439,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             vitalsId=vitalObj.getInt("vitalID");
 
 
+
             binding.textviewPatientDOB.setText(pObj.getString("dob"));
             binding.textviewGender.setText(pObj.getString("gender"));
             binding.textviewBP.setText(vitalObj.getString("blood_pressure"));
@@ -493,6 +484,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     Toast.makeText(PatientsDetailedActivity.this, "Please add prescription", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
                     for (int i = 0; i < adapter.getCount(); i++) {
                         String timing = adapter.getItem(i).split(",")[0].split(":")[1].trim();
                         String duration = "" + adapter.getItem(i).split(",")[2].split(" ")[2] + " Days";
@@ -506,6 +498,21 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                         Prescription prescription = new Prescription(idd, med, duration, timing, currentDateStr);
                         prescriptions.add(prescription);
                     }
+                    String comments=binding.textviewComments.getText().toString();
+                    GetRetrofitInstance.getApiService().CommentsTest(id,comments).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if(response.isSuccessful())
+                                Toast.makeText(PatientsDetailedActivity.this, "Comments Add", Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(PatientsDetailedActivity.this, "Comments not Add", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(PatientsDetailedActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
 
 
                     GetRetrofitInstance.getApiService().Addingprescription(prescriptions).enqueue(new Callback<String>() {

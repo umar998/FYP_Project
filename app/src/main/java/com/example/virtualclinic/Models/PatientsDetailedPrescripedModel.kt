@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class PatientsDetailedPrescripedModel(
     @SerializedName("x") val patientX: MyPatientX,
-    @SerializedName("p") val myPatientP: MyPatientP
+    @SerializedName("p") val myPatientP: MyPatientP,
+    @SerializedName("t") val myPatientT: MyPatientT
 ) : java.io.Serializable
 
 data class MyPatientX(
@@ -29,4 +30,10 @@ data class MyPatientP(
     @SerializedName("timings") val timings: String,
     @SerializedName("date") val date: String,
 ) : java.io.Serializable
+data class MyPatientT(
+    @SerializedName("commentTest_id") val commentTest_id: Int,
+    @SerializedName("comments") val comments: String,
+    @SerializedName("appointment_id") val appointment_id: Int
+
+);
 

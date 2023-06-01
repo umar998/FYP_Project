@@ -456,6 +456,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
 //                Glide.with(binding.imagesss).load(Api.BASE_URL2 + vitalObj.getString("image")).into(binding.imagesss);
 //            }
             Glide.with(binding.imagesss).load(Api.BASE_URL2 + vitalObj.getString("image")).into(binding.imagesss);
+            Glide.with(binding.testimagesss).load(Api.BASE_URL3 + vitalObj.getString("testimage")).into(binding.testimagesss);
             GetRetrofitInstance.getApiService().Gettingappointmentid(pObj.getInt("patient_id")).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -502,10 +503,10 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     GetRetrofitInstance.getApiService().CommentsTest(id,comments).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            if(response.isSuccessful())
-                                Toast.makeText(PatientsDetailedActivity.this, "Comments Add", Toast.LENGTH_LONG).show();
-                            else
-                                Toast.makeText(PatientsDetailedActivity.this, "Comments not Add", Toast.LENGTH_LONG).show();
+//                            if(response.isSuccessful())
+//                                Toast.makeText(PatientsDetailedActivity.this, "Comments Add", Toast.LENGTH_LONG).show();
+//                            else
+//                                Toast.makeText(PatientsDetailedActivity.this, "Comments not Add", Toast.LENGTH_LONG).show();
                         }
 
                         @Override
@@ -539,8 +540,8 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     GetRetrofitInstance.getApiService().Updatingvitalstatus(vitalsId).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            if (response.isSuccessful())
-                                Toast.makeText(PatientsDetailedActivity.this, "vitals updated", Toast.LENGTH_LONG).show();
+//                            if (response.isSuccessful())
+//                                Toast.makeText(PatientsDetailedActivity.this, "vitals updated", Toast.LENGTH_LONG).show();
                         }
 
                         @Override

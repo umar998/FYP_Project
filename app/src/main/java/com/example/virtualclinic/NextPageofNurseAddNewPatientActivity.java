@@ -47,9 +47,11 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     final int Gallery_REQUEST_CODE=1001;
-    Uri imageuri;
-    private ImageView imageView;
-    Bitmap photo;
+    Uri imageuri,imageuri2;
+    private ImageView imageView,imageView2;
+    boolean isVitalsImageSelected = false;
+    boolean isTestImageSelected = false;
+    Bitmap photo,testphoto;
     //rightclick kr k generate me ja k overridemethod click krna h phr ye  onActivityResult likhna h
     //ye pic get kr k show kry ga
     @Override
@@ -57,26 +59,25 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
     {
 
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-
-            photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+            if(data!=null) {
+                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+                if(capturedImage!=null) {
+                    if (isVitalsImageSelected) {
+                        photo = capturedImage;
+                        imageView.setImageBitmap(photo);
+                    }
+                    if (isTestImageSelected) {
+                        testphoto = capturedImage;
+                        imageView2.setImageBitmap(testphoto);
+                    }
+                }
+            }
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode==CAMERA_REQUEST_CODE)
-//        {
-//            if(resultCode==RESULT_OK)
-//            {
-//                Bundle bundleobj= data.getExtras();
-//                Bitmap bmpimg=(Bitmap) bundleobj.get("data");
-//                binding.imagesss.setImageBitmap(bmpimg);
-//                ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
-//                bmpimg.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-//                byte[] imgArr=outputStream.toByteArray();
-//            }
-//        }
 
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
     private byte[] convertImageToByteArray(Uri uri) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
@@ -105,6 +106,31 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
         boolean saveImage = false;
         // set saveImage to true or false based on your condition
         return saveImage;
+    }
+    private String saveImage2()
+    {
+        if(testphoto==null){
+            return "";
+        }
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd_HHmmss", Locale.getDefault());
+        String fname = sdf.format(new Date());
+        File file = new File(directory, fname + ".jpg");
+        if (file.exists())
+            file.delete();
+        imageuri2 = Uri.parse(file.toString());
+        Log.d("path", file.toString());
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file);
+            testphoto.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+        return file.toString();
     }
    private String saveImage()
    {
@@ -138,12 +164,14 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
         binding= ActivityNextPageofNurseAddNewPatientBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.imageView = (ImageView) binding.imagesss;
+        this.imageView2=(ImageView)binding.testimagesss;
 
         binding.save.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
                 saveImage();
+                saveImage2();
                // RequestBody bp= RequestBody.create(MediaType.parse(binding.EdittextBP.getText().toString()));
                 String systolic = binding.EdittextSystolic.getText().toString();
                 String diastolic=binding.EdittextDiastolic.getText().toString();
@@ -167,12 +195,22 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                 Intent i = getIntent();
                 int Patients_id = i.getIntExtra("staticclass",0);
                 int nurseID=i.getIntExtra("nurseID",0);
-                if(systolic.isEmpty()||diastolic.isEmpty()||sugar.isEmpty()||temp.isEmpty()||res.equals(""))
+                if(systolic.isEmpty()||diastolic.isEmpty()||sugar.isEmpty()||temp.isEmpty()||Symptoms.equals(""))
                     Toast.makeText(NextPageofNurseAddNewPatientActivity.this,"Enter Required Fields",Toast.LENGTH_LONG).show();
                 else {
                     RetrofitClient client = RetrofitClient.getInstance();
                     Api api = client.getMyApi();
                     MultipartBody.Part photo;
+                    MultipartBody.Part testphoto;
+                    if (imageuri2 != null) {
+                        File file = new File(imageuri2.toString());
+                        // rest of the code
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("testphoto/*"), file);
+                        testphoto = MultipartBody.Part.createFormData("testphoto", file.getName(), requestBody);
+                    } else {
+                        RequestBody photoData = RequestBody.create(MediaType.parse("text/plain"), "");
+                        testphoto = MultipartBody.Part.createFormData("testphoto", "", photoData);
+                    }
                     if (imageuri != null) {
                         File file = new File(imageuri.toString());
                         // rest of the code
@@ -182,12 +220,13 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                         RequestBody photoData = RequestBody.create(MediaType.parse("text/plain"), "");
                         photo = MultipartBody.Part.createFormData("photo", "", photoData);
                     }
+
                     RequestBody PIdd = RequestBody.create(MediaType.parse("text/plain"), Patients_id + "");
                     RequestBody bbp = RequestBody.create(MediaType.parse("text/plain"), bpResult);
                     RequestBody sugarr = RequestBody.create(MediaType.parse("text/plain"), sugar);
                     RequestBody temperature = RequestBody.create(MediaType.parse("text/plain"), temp);
                     RequestBody symp = RequestBody.create(MediaType.parse("text/plain"), res);
-                    api.Addvitals(photo, PIdd, bbp, sugarr, temperature, symp).enqueue(new Callback<String>() {
+                    api.Addvitals(photo, testphoto, PIdd, bbp, sugarr, temperature, symp).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
                             if (response.isSuccessful()) {
@@ -215,21 +254,59 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                                         "Visits also Added",
                                         Toast.LENGTH_SHORT).show();
                             }
-
-
                         }
 
                         @Override
                         public void onFailure(Call<StaticClass> call, Throwable t) {
                             //Toast.makeText(NextPageofNurseAddNewPatientActivity.this,t.toString(),Toast.LENGTH_LONG).show();
-
                         }
                     });
                 }
             }
         });
 
+        binding.testimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder= new AlertDialog.Builder(NextPageofNurseAddNewPatientActivity.this);
+                //builder.setTitle("Select one Option");
+                String []ChoiceArr={"Cature Using Camera"};
+                builder.setItems(ChoiceArr, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
 
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                        {
+                            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                            {
+                                requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                            }
+                            else if(position==0)
+                            {
+                                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                                isTestImageSelected = true;
+                                isVitalsImageSelected = false;
+                            }
+//                            else if(position==1)
+//                            {
+//                                Intent intent = new Intent((Intent.ACTION_PICK),
+//                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                                startActivityForResult(intent, Gallery_REQUEST_CODE);
+//                            }
+                        }
+//                        else
+//                        {
+//                            //For Gallery
+//                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                            startActivityForResult(intent, Gallery_REQUEST_CODE);
+//                        }
+                    }
+                });
+                AlertDialog alert= builder.create();
+                alert.show();
+            }
+        });
         binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,6 +327,8 @@ public class NextPageofNurseAddNewPatientActivity extends AppCompatActivity {
                             {
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                                isVitalsImageSelected = true;
+                                isTestImageSelected = false;
                             }
 //                            else if(position==1)
 //                            {

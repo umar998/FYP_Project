@@ -41,6 +41,7 @@ import retrofit2.http.Query;
 
 public interface Api {
     public  static String BASE_URL2="http://192.168.26.198/fyp/Content/Uploads/";
+    public  static String BASE_URL3="http://192.168.26.198/fyp/Content/TestImages/";
     public  static String BASE_URL="http://192.168.26.198/fyp/api/";
 
     @POST("Jrdoc/Jrsignup")
@@ -172,6 +173,7 @@ public interface Api {
     @POST("Nursel/Addvitals")
     public Call<String> Addvitals(
             @Part MultipartBody.Part photo,
+            @Part MultipartBody.Part testphoto,
             @Part("patient_id") RequestBody id,
             @Part("blood_pressure") RequestBody  bp,
             @Part("sugar") RequestBody  sugar,

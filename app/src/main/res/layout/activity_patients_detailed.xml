@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="800dp"
+    android:layout_height="match_parent"
     android:background="@drawable/backcolor"
     tools:context=".PatientsDetailedActivity">
     <LinearLayout
@@ -155,12 +155,22 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:id="@+id/textview_symptoms"/>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <ImageView
         android:id="@+id/imagesss"
         android:layout_width="100dp"
         android:layout_height="90dp"
         android:src="@drawable/ic_launcher_foreground" />
+    <ImageView
+        android:layout_marginLeft="40dp"
+        android:id="@+id/testimagesss"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
+        android:src="@drawable/ic_launcher_foreground" />
+</LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -238,14 +248,10 @@
             android:backgroundTint="@color/teal_700"
             android:layout_gravity="right"
             android:hint="Send" />
-
     </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listviewpatientmedicnes"/>
     </LinearLayout>
-
-
-
 </ScrollView>

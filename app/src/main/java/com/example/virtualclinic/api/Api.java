@@ -102,6 +102,14 @@ public interface Api {
     public Call<JuniorDoctorLogin> JrLogin(
             @Query("email") String email,@Query("password") String password
     );
+    @POST("Jrdoc/AddFollowUp")
+    public Call<String> AddFollowUp(
+            @Query("patid") int patid,@Query("jrdocid") int jrdocid
+    );
+    @POST("Jrdoc/RemoveFollowUp")
+    public Call<String> RemoveFollowUp(
+            @Query("patid") int patid
+    );
     @POST("Srdoc/Srdoclogin")
     public Call<SeniorDoctorLogin> Srdoclogin(
             @Query("email") String email,@Query("password") String password
@@ -152,7 +160,7 @@ public interface Api {
 
     @POST("Jrdoc/Updatingvitalstatus")
     public Call<String> Updatingvitalstatus(
-            @Query("vitalid") int vitalid
+            @Query("vitalid") int vitalid,@Query("aptid") int aptid
     );
     @POST("Jrdoc/Jrlogout")
     public Call<String> Jrlogout(

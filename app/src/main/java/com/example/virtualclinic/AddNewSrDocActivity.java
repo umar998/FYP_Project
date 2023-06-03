@@ -61,8 +61,7 @@ public class AddNewSrDocActivity extends AppCompatActivity {
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AddNewSrDocActivity.this,AdminLayoutActivity.class);
-                startActivity(i);
+               finish();
             }
         });
     }

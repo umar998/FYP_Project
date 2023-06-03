@@ -3,6 +3,7 @@ package com.example.virtualclinic;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import retrofit2.Response;
 public class SearchingPatientCNICActivity extends AppCompatActivity {
     ActivitySearchingPatientCnicactivityBinding binding;
     SrDocAppointments srDocAppointments;
+    boolean isColorChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,13 @@ public class SearchingPatientCNICActivity extends AppCompatActivity {
         binding.search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (isColorChanged)
+                binding.search.setBackgroundColor(Color.GRAY);
+                else
+                    binding.search.setBackgroundColor(Color.GREEN);
+
+                // Toggle the color state
+                isColorChanged = !isColorChanged;
                 String cnic= binding.edittextCNIC.getText().toString();
 //                GetRetrofitInstance.getApiService().Gettingdate(cnic).enqueue(new Callback<List<SrDocAppointments>>() {
 //                    @Override

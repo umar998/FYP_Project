@@ -19,6 +19,7 @@ import com.example.virtualclinic.databinding.MedicnePopupBinding;
 import com.example.virtualclinic.databinding.TimingPopupBinding;
 import com.example.virtualclinic.rest.GetRetrofitInstance;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,7 +34,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
     private MedicnePopupBinding medicinebinding;
     private DurationPopupBinding durationPopupBinding;
     private TimingPopupBinding timingPopupBinding;
-    int id = StaticClass.id, visitId = -1 , vitalsId = -1 ;
+    int id = StaticClass.id, visitId = -1 , vitalsId = -1 , patient_id=-1,jrdoc_id=-1;
 
     String Timing = "", medicine = "", Duration = "";
     ArrayAdapter<String> adapter;
@@ -363,7 +364,8 @@ public class PatientsDetailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPatientsDetailedBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+
+
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<>());
         binding.listviewpatientmedicnes.setAdapter(adapter);
@@ -437,8 +439,23 @@ public class PatientsDetailedActivity extends AppCompatActivity {
             JSONObject visitsObj = firstItem.getJSONObject("x");
             visitId = visitsObj.getInt("visit_id");
             vitalsId=vitalObj.getInt("vitalID");
+            patient_id=pObj.getInt("patient_id");
+            jrdoc_id=visitsObj.getInt("jrdoc_id");
+         //   Toast.makeText(PatientsDetailedActivity.this,"doc id"+pObj.getString("jrdoc_id"),Toast.LENGTH_LONG).show();
+            if(!pObj.getString("jrdoc_id").equals("null")) {
+                binding.followup.setVisibility(View.GONE);
+                binding.removefollowup.setVisibility(View.VISIBLE);
+            }
 
-
+            else {
+                binding.followup.setVisibility(View.VISIBLE);
+                binding.removefollowup.setVisibility(View.GONE);
+            }
+//            if(pObj.getString("jrdoc_id").equals(null))
+//                binding.removefollowup.setVisibility(View.GONE);
+//            else
+//                binding.removefollowup.setVisibility(View.VISIBLE);
+            setContentView(binding.getRoot());
 
             binding.textviewPatientDOB.setText(pObj.getString("dob"));
             binding.textviewGender.setText(pObj.getString("gender"));
@@ -450,6 +467,44 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                 binding.textviewPatientname.setText(pObj.getString("relative_name"));
             else
                 binding.textviewPatientname.setText(pObj.getString("full_name"));
+            binding.followup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        GetRetrofitInstance.getApiService().AddFollowUp(patient_id,jrdoc_id).enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                if(response.isSuccessful())
+                                Toast.makeText(PatientsDetailedActivity.this,"Follow up Added",Toast.LENGTH_LONG).show();
+                                else
+                                    Toast.makeText(PatientsDetailedActivity.this,"Follow up not Added",Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                }
+            });
+            binding.removefollowup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GetRetrofitInstance.getApiService().RemoveFollowUp(patient_id).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if(response.isSuccessful())
+                                Toast.makeText(PatientsDetailedActivity.this,"Removed Follow up",Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(PatientsDetailedActivity.this,"Not removed Follow up",Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
+                }
+            });
 
 //            Toast.makeText(PatientsDetailedActivity.this,"Image"+vitalObj.getString("image"),Toast.LENGTH_LONG).show();
 //            if (vitalObj.has("image") && !pObj.getString("image").equals("")) {
@@ -499,7 +554,8 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                         Prescription prescription = new Prescription(idd, med, duration, timing, currentDateStr);
                         prescriptions.add(prescription);
                     }
-                    String comments=binding.textviewComments.getText().toString();
+                    String comments="";
+                    comments=binding.textviewComments.getText().toString();
                     GetRetrofitInstance.getApiService().CommentsTest(id,comments).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
@@ -537,7 +593,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                             Toast.makeText(PatientsDetailedActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
-                    GetRetrofitInstance.getApiService().Updatingvitalstatus(vitalsId).enqueue(new Callback<String>() {
+                    GetRetrofitInstance.getApiService().Updatingvitalstatus(vitalsId,id).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
 //                            if (response.isSuccessful())

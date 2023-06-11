@@ -406,7 +406,16 @@ public class PatientsDetailedActivity extends AppCompatActivity {
                     Toast.makeText(PatientsDetailedActivity.this, "Please select a medicine", Toast.LENGTH_LONG).show();
                 } else
                 {
-
+//                    else {
+//                    // Check if the selected medicine contradicts with the timing
+//                    boolean hasContradiction = false;
+//                    if (time.equals("Night") && med.equals("Panadol")) {
+//                        hasContradiction = true;
+//                    }
+//
+//                    if (hasContradiction) {
+//                        Toast.makeText(PatientsDetailedActivity.this, "Contradiction: Do not take Panadol at night", Toast.LENGTH_LONG).show();
+//                    } else {
                     String prescription = "Timing: " + time + ", Medicine: " + med + ", Duration: " + duraton;// Check if the medicine already exists in the adapter
                     boolean isAlreadyAdded = false;
                     for (int i = 0; i < adapter.getCount(); i++) {

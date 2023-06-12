@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:textStyle="italic"
-        android:hint="High There is  nice to see you again"
+        android:hint="Hi There! Nice to see you again"
         android:textSize="15dp"
         android:textColor="@color/purple_200"/>
     <com.google.android.material.textfield.TextInputLayout

@@ -34,7 +34,7 @@ public class PatientsDetailedActivity extends AppCompatActivity {
     private MedicnePopupBinding medicinebinding;
     private DurationPopupBinding durationPopupBinding;
     private TimingPopupBinding timingPopupBinding;
-    int id = StaticClass.id, visitId = -1 , vitalsId = -1 , patient_id=-1,jrdoc_id=-1;
+    int id = StaticClass.id, visitId = -1 , vitalsId = -1 , patient_id=-1,jrdoc_id=-1 , money=50;
 
     String Timing = "", medicine = "", Duration = "";
     ArrayAdapter<String> adapter;
@@ -611,6 +611,17 @@ public class PatientsDetailedActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
+                        }
+                    });
+                    GetRetrofitInstance.getApiService().AddingMoney(jrdoc_id,money).enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
                         }
                     });
                 }

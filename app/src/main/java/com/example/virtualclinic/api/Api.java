@@ -40,14 +40,19 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface Api {
-    public  static String BASE_URL2="http://192.168.26.198/fyp/Content/Uploads/";
-    public  static String BASE_URL3="http://192.168.26.198/fyp/Content/TestImages/";
-    public  static String BASE_URL="http://192.168.26.198/fyp/api/";
+    public  static String BASE_URL2="http://192.168.250.198/fyp/Content/Uploads/";
+    public  static String BASE_URL3="http://192.168.250.198/fyp/Content/TestImages/";
+    public  static String BASE_URL="http://192.168.250.198/fyp/api/";
 
     @POST("Jrdoc/Jrsignup")
     public Call<String> Jrsignup(
         @Body juniorDoctor j
         );
+
+    @POST("Jrdoc/AddingMoney")
+    public Call<String> AddingMoney(
+            @Query("jrdocid") int jrdocid,@Query("money") int money
+    );
 
     @POST("Admin/Addnewnurse")
     public Call<String> Addnewnurse(

@@ -10,5 +10,6 @@ public class juniorDoctor {
     public String gender ;
     public String contact ;
     public String role;
+    public int money;
 
 }

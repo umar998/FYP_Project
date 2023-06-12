@@ -35,7 +35,7 @@ public class Signup_Screen_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                int money=0;
                     String Fullname = binding.edittextFullname.getText().toString();
                     String Fathername = binding.edittextFathername.getText().toString();
                     String DOB = binding.edittextDOB.getText().toString();
@@ -63,6 +63,7 @@ public class Signup_Screen_Activity extends AppCompatActivity {
                     j.gender = gender;
                     j.role = role;
                     j.contact = contact;
+                    j.money=money;
 
                     api.Jrsignup(j).enqueue(new Callback<String>() {
                         @Override
